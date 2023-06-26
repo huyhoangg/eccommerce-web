@@ -7,7 +7,8 @@ import Footer from "~/components/Footer/Footer";
 
 function App() {
   return (
-    <div className="">
+   
+    <div className="font-lora">
       <Header />
       <Content />
       <NewArrivals />

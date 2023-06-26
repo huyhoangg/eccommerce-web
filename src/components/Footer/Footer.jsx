@@ -46,6 +46,7 @@ function Footer() {
                   </li>
                 </ul>
               </div>
+             
               <div>
                 <h2 className="mb-6 text-sm font-semibold text-gray-600  dark:text-black">
                   Trợ giúp
@@ -61,7 +62,7 @@ function Footer() {
                   </li>
                   <li className="mb-6">
                     <a
-                      href="https://discord.gg/4eeurUVvTy"
+                      href=""
                       className="hover:underline"
                     >
                       Hoàn tiền
@@ -69,7 +70,7 @@ function Footer() {
                   </li>
                   <li className="mb-6">
                     <a
-                      href="https://discord.gg/4eeurUVvTy"
+                      href=""
                       className="hover:underline"
                     >
                       Chính sách & quyền riêng tư
