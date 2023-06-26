@@ -1,23 +1,21 @@
 import React from "react";
-
+import Mockup from "../../assets/navImg.png";
 function Hero() {
   return (
     <section className="">
-      <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 text-black">
-        <div className="mr-auto place-self-center lg:col-span-7">
+      <div className="grid  px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 text-black">
+        <div className=" place-self-center lg:col-span-7" style={{ maxWidth: '1280px',
+    margin: '0 auto'}}>
           <h1 className="max-w-2xl mb-4 text-4xl font-normal tracking-tight leading-none md:text-5xl xl:text-6xl">
             Ở ĐÂY CÓ BÁN
           </h1>
           <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
             BÀI TARROT
           </h1>
-          <a
-            href="#"
-            className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center rounded-lg bg-primary-700 underline"
-          >
-            Mua Ngay
-            <svg
-              className="w-5 h-5 ml-2 -mr-1"
+          <h1 className=" inline-block relative text-[25px] font-semibold title-font mt-3 text-black " >
+                Mua Ngay
+                <svg
+              className="w-5 h-5 ml-2 -mr-1 inline-block" 
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -28,15 +26,21 @@ function Hero() {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
+                <span span style={{position: 'absolute', content: '',  height: '2px', bottom: '-16px', left: '-7px', right:'-7px', backgroundColor: 'black'}}></span>
+              
+           
+          </h1>
           
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
           <img
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+            src={Mockup}
+            className="w-full"
             alt="mockup"
+            style={{ maxWidth: "none" }}
           />
         </div>
+
       </div>
     </section>
   );

@@ -1,5 +1,16 @@
 import React from "react";
 
+import Blog1 from "../../assets/blog1.svg"
+import Blog2 from "../../assets/blog2.svg"
+import Blog3 from "../../assets/blog3.svg"
+
+
+
+
+import {AiOutlineCalendar} from 'react-icons/ai'
+
+
+
 function Blogs() {
   return (
     <div>
@@ -9,12 +20,9 @@ function Blogs() {
             <div className="w-full px-4">
               <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
                 <h2 className="text-dark mb-4 text-3xl font-bold sm:text-4xl md:text-[40px]">
-                  Our Recent News
+                Blogs
                 </h2>
-                <p className="text-body-color text-base">
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
-                </p>
+                
               </div>
             </div>
           </div>
@@ -23,27 +31,32 @@ function Blogs() {
               <div className="mx-auto mb-10 max-w-[370px]">
                 <div className="mb-8 overflow-hidden rounded">
                   <img
-                    src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-01.jpg"
+                    src={Blog1}
                     alt="image"
                     className="w-full"
                   />
                 </div>
                 <div>
-                  <span className="bg-primary mb-5 inline-block rounded py-1 px-4 text-center text-xs font-semibold leading-loose text-white">
-                    Dec 22, 2023
-                  </span>
-                  <h3>
-                    <a
+                  <div className="text-center ">
+                    <p
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl"
+                      className="cursor-text text-dark  mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px] "
                     >
-                      Meet AutoManage, the best AI management tools
-                    </a>
-                  </h3>
-                  <p className="text-body-color text-base">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </p>
+                      Cách đọc nghĩa ngược bài Tarot 
+                    </p>
+                    <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
+                      <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
+                    </h1>
+                  <div class=" inline-flex items-center">
+                    <span class=" mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
+                      5 min <AiOutlineCalendar  className ="ml-2 mr-1  text-[18px]"/> 
+                      <p class="">
+                        12<span class="text-sm"><sup class="text-[10px]">th</sup></span> Oct 2022
+                      </p>
+                    </span>
+                  </div>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -51,27 +64,34 @@ function Blogs() {
               <div className="mx-auto mb-10 max-w-[370px]">
                 <div className="mb-8 overflow-hidden rounded">
                   <img
-                    src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-02.jpg"
+                    src={Blog2}
                     alt="image"
                     className="w-full"
                   />
                 </div>
                 <div>
-                  <span className="bg-primary mb-5 inline-block rounded py-1 px-4 text-center text-xs font-semibold leading-loose text-white">
-                    Mar 15, 2023
-                  </span>
-                  <h3>
-                    <a
+                  
+                  <div className="text-center" >
+                    <p
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl"
+                      className="cursor-text text-dark mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px]"
                     >
-                      How to earn more money as a wellness coach
-                    </a>
-                  </h3>
-                  <p className="text-body-color text-base">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </p>
+                      Môi Trường Giải Bài Tarot
+                    </p>
+                    <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
+                      <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
+                    </h1>
+                    <div class=" inline-flex items-center">
+                    <span class="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
+                      5 min <AiOutlineCalendar  className ="ml-2 mr-1  text-[18px]"/> 
+                      <p class="">
+                        12<span class="text-sm"><sup class="text-[10px]">th</sup></span> Oct 2022
+                      </p>
+                    </span>
+                  </div>
+                  
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -79,34 +99,44 @@ function Blogs() {
               <div className="mx-auto mb-10 max-w-[370px]">
                 <div className="mb-8 overflow-hidden rounded">
                   <img
-                    src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-03.jpg"
+                    src={Blog3}
                     alt="image"
                     className="w-full"
                   />
                 </div>
                 <div>
-                  <span className="bg-primary mb-5 inline-block rounded py-1 px-4 text-center text-xs font-semibold leading-loose text-white">
-                    Jan 05, 2023
-                  </span>
-                  <h3>
-                    <a
+                 
+                  <div  className="text-center">
+                    <p
                       href="javascript:void(0)"
-                      className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl"
+                      className=" cursor-text text-dark  mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px]"
                     >
-                      The no-fuss guide to upselling and cross selling
-                    </a>
-                  </h3>
-                  <p className="text-body-color text-base">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </p>
+                      Giải Bài Tarot Cho Bản Thân
+                    </p>
+                    <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
+                      <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
+                    </h1>
+                    <div class=" inline-flex items-center">
+                    <span class="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center ">
+                      5 min <AiOutlineCalendar  className ="ml-2 mr-1 text-[18px]"/> 
+                      <p class="">
+                        12<span class="text-sm"><sup class="text-[10px]" >th</sup></span> Oct 2022
+                      </p>
+                    </span>
+                  </div>
+                  </div>
+                  
                 </div>
               </div>
             </div>
           </div>
-          <h1 className="sm:text-xl text-3xl font-medium title-font mb-4 text-black underline text-center my-20">
-            Xem them
-          </h1>
+          <div className="text-center">
+              <h1 className=" inline-block relative text-[20px] font-semibold title-font mb-4 text-black text-center my-20" >
+                Xem thêm
+                <span span style={{position: 'absolute', content: '',  height: '2px', bottom: '-16px', left: '-7px', right:'-7px', backgroundColor: 'black'}}></span>
+              </h1>
+          </div>
+        
         </div>
       </section>
     </div>

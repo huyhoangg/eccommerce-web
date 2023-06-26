@@ -2,9 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily : {
+      poppins: ["Poppins"],
+    },
     extend: {
       colors: {
-        primary: "#FFE4A7",
+        primary: "#FFF9E5",
         secondary: "#FFF4F4",
       },
     },
