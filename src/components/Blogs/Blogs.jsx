@@ -3,10 +3,6 @@ import React from "react";
 import Blog1 from "../../assets/blog1.svg"
 import Blog2 from "../../assets/blog2.svg"
 import Blog3 from "../../assets/blog3.svg"
-
-
-
-
 import {AiOutlineCalendar} from 'react-icons/ai'
 
 

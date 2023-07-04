@@ -1,5 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Mockup from "../../assets/navImg.png";
+
+
 function Hero() {
   return (
     <section className="">
@@ -12,7 +15,7 @@ function Hero() {
           <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
             BÀI TARROT
           </h1>
-          <h1 className=" inline-block relative text-[25px] font-semibold title-font mt-3 text-black " >
+          <Link to="/store" className=" inline-block relative text-[25px] font-semibold title-font mt-3 text-black " >
                 Mua Ngay
                 <svg
               className="w-5 h-5 ml-2 -mr-1 inline-block" 
@@ -28,8 +31,8 @@ function Hero() {
             </svg>
                 <span span style={{position: 'absolute', content: '',  height: '2px', bottom: '-16px', left: '-7px', right:'-7px', backgroundColor: 'black'}}></span>
               
-           
-          </h1>
+          
+          </Link>
           
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">

@@ -1,20 +1,16 @@
-import Header from "~/components/Header/Header";
-import Content from "~/components/Content/Content";
-import NewArrivals from "~/components/NewArrivals/NewArrivals";
-import NewArrivalBanner from "~/components/NewArrivals/NewArrivalBanner";
-import Blogs from "~/components/Blogs/Blogs";
-import Footer from "~/components/Footer/Footer";
+import {Routes, Route} from 'react-router-dom'
+import HomePage from "~/pages/HomePage/HomePage";
+import ListProductsPage from '~/pages/ListProductsPage/ListProductsPage';
+import ProductDetail from '~/pages/ProductDetailPage/ProductDetailPage';
 
 function App() {
   return (
-   
     <div className="font-lora">
-      <Header />
-      <Content />
-      <NewArrivals />
-      <NewArrivalBanner />
-      <Blogs/>
-      <Footer/>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/store" element={<ListProductsPage />} />
+        <Route path="/store/:id" element={<ProductDetail />} />
+      </Routes>
     </div>
   );
 }
