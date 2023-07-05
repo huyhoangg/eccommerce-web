@@ -61,6 +61,9 @@ const filters = [
 
 export default function AccordionDropdown() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu2, setOpenMenu2] = useState(false);
+  const [openMenu3, setOpenMenu3] = useState(false);
+
 
   const [openAcc1, setOpenAcc1] = useState(true);
   const [openAcc2, setOpenAcc2] = useState(true);
@@ -70,12 +73,17 @@ export default function AccordionDropdown() {
     setOpenAcc1((cur) => !cur);
     openAcc1 ? setOpenMenu(true) : setOpenMenu(false);
   };
-  const handleOpenAcc2 = () => setOpenAcc2((cur) => !cur);
-  const handleOpenAcc3 = () => setOpenAcc3((cur) => !cur);
+  const handleOpenAcc2 = () => {setOpenAcc2((cur) => !cur)
+    openAcc2 ? setOpenMenu2(true) : setOpenMenu2(false);
+  };
+  const handleOpenAcc3 = () => {setOpenAcc3((cur) => !cur);
+    openAcc3 ? setOpenMenu3(true) : setOpenMenu3(false);
+  
+  }
 
   return (
-    <Fragment>
-      <Accordion open={openAcc1}>
+    <Fragment >
+      <Accordion open={openAcc1} className="">
         <AccordionHeader className="" onClick={handleOpenAcc1}>
           Color
           <BsChevronCompactUp
@@ -85,25 +93,63 @@ export default function AccordionDropdown() {
             }`}
           />
         </AccordionHeader>
-        <AccordionBody className="flex flex-col">
-          {filters[0].options.map((color) => (
-            <Checkbox key={color.value} label={color.value} />
-          ))}
-        </AccordionBody>
+          <AccordionBody className="flex flex-col overflow-visible">
+            {filters[0].options.map((color) => (
+              <Checkbox
+                className=" overflow-visible before:w-0"
+                containerProps={{
+                  className: "p-0 my-[0.75rem] mr-[0.75rem] rounded "
+                }}
+                key={color.value}
+                label={color.value}
+              />
+            ))}
+          </AccordionBody>
       </Accordion>
       <Accordion open={openAcc2}>
-        <AccordionHeader onClick={handleOpenAcc2}>Category</AccordionHeader>
+        <AccordionHeader onClick={handleOpenAcc2}>Category
+        <BsChevronCompactUp
+            strokeWidth={2.5}
+            className={`h-3.5 w-3.5 transition-transform ${
+              openMenu2 ? "rotate-180" : ""
+            }`}
+          />
+        </AccordionHeader>
+        
         <AccordionBody className="flex flex-col">
           {filters[1].options.map((category) => (
-            <Checkbox key={category.value} label={category.value} />
+            <Checkbox
+              className=" overflow-visible before:w-0"
+              containerProps={{
+                className: "p-0 my-[0.75rem] mr-[0.75rem] rounded "
+              }}
+              key={category.value}
+              label={category.value}
+            />
           ))}
         </AccordionBody>
       </Accordion>
       <Accordion open={openAcc3}>
-        <AccordionHeader onClick={handleOpenAcc3}>Size</AccordionHeader>
+        <AccordionHeader onClick={handleOpenAcc3}>Size
+        <BsChevronCompactUp
+            strokeWidth={2.5}
+            className={` h-3.5 w-3.5 transition-transform ${
+              openMenu3 ? "rotate-180" : ""
+            }`}
+          />
+        </AccordionHeader>
         <AccordionBody>
           {filters[2].options.map((size) => (
-            <Checkbox key={size.value} label={size.value} />
+            <Checkbox
+            className=" overflow-visible before:w-0 mxr-[15px] "
+            containerProps={{
+              className: "p-0 my-[0.75rem] rounded "
+            }}
+            key={size.value}
+            label={
+                <div className="w-[20px] mx-[12px]">{size.value}</div>
+            }
+            />
           ))}
         </AccordionBody>
       </Accordion>

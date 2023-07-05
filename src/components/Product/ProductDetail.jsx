@@ -8,6 +8,8 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import { SlArrowRight } from "react-icons/sl";
+
 import { Link, useParams } from "react-router-dom";
 
 const data = [
@@ -56,28 +58,35 @@ const ProductDetail = () => {
 
   return (
     <div>
-      <Breadcrumbs className="bg-white">
-        <Link to="/" className="opacity-60">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-          </svg>
-        </Link>
-        <Link to="/store" className="opacity-60">
-          <span>Store</span>
-        </Link>
-        <a>{product && product.title}</a>
-      </Breadcrumbs>
-
       <section className="overflow-hidden bg-white py-11 dark:bg-gray-800">
         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+            <Breadcrumbs className="mt-[80px] mb-[50px] " separator={<SlArrowRight className=" flex w-3 h-3 " strokeWidth={1.5} />}>
+              <Link to="/" className="opacity-60 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
+                <span class="ml-1">Home</span>
+              </Link>
+              
+
+              <Link to="/store" className="opacity-60">
+                <span>Store</span>
+              </Link>
+              <div class="border-l border-black pl-[15px] ml-[7px] ">
+            <a>{product && product.title}</a>
+
+              </div>
+          </Breadcrumbs>
+
+          
           <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4 md:w-1/2 ">
-              <div className="sticky top-0 z-50 overflow-hidden ">
+              <div className=" top-0 z-1 overflow-hidden ">
                 <div className="relative mb-6 lg:mb-10 lg:h-2/4 ">
                   <Carousel transition={{ duration: 1 }} className="rounded-xl">
                     {loading
