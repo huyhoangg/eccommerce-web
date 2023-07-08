@@ -5,8 +5,8 @@ function Footer() {
     <div>
       <footer className="bg-white ">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 ">
-        <div class="grid grid-cols-10 ">
-            <div class="col-span-3 mb-6 md:mb-0 ">
+        <div className="grid grid-cols-10 ">
+            <div className="col-span-3 mb-6 md:mb-0 ">
               <a href="" className="flex items-center">
                 <img
                   src="https://flowbite.com/docs/images/logo.svg"
@@ -18,7 +18,7 @@ function Footer() {
                 </span>
               </a>
             </div>
-            <div class="col-span-7 grid grid-cols-4 gap-8 sm:gap-6">
+            <div className="col-span-7 grid grid-cols-4 gap-8 sm:gap-6">
               <div>
                 <h2 className="mb-6 text-sm font-semibold text-gray-600   ">
                   Links

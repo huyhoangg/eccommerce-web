@@ -43,11 +43,11 @@ function Blogs() {
                     <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
                       <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
                     </h1>
-                  <div class=" inline-flex items-center">
-                    <span class=" mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
+                  <div className=" inline-flex items-center">
+                    <span className=" mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
                       5 min <AiOutlineCalendar  className ="ml-2 mr-1  text-[18px]"/> 
-                      <p class="">
-                        12<span class="text-sm"><sup class="text-[10px]">th</sup></span> Oct 2022
+                      <p className="">
+                        12<span className="text-sm"><sup className="text-[10px]">th</sup></span> Oct 2022
                       </p>
                     </span>
                   </div>
@@ -77,11 +77,11 @@ function Blogs() {
                     <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
                       <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
                     </h1>
-                    <div class=" inline-flex items-center">
-                    <span class="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
+                    <div className=" inline-flex items-center">
+                    <span className="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center">
                       5 min <AiOutlineCalendar  className ="ml-2 mr-1  text-[18px]"/> 
-                      <p class="">
-                        12<span class="text-sm"><sup class="text-[10px]">th</sup></span> Oct 2022
+                      <p className="">
+                        12<span className="text-sm"><sup className="text-[10px]">th</sup></span> Oct 2022
                       </p>
                     </span>
                   </div>
@@ -112,11 +112,11 @@ function Blogs() {
                     <h1 className=" relative  text-[24px] font-semibold title-font  text-black text-center mb-[5px] mt-[3px] " >
                       <span style={{display: 'inline-block', borderBottom: '2px solid black', width: 'auto'}}>Xem thêm</span>
                     </h1>
-                    <div class=" inline-flex items-center">
-                    <span class="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center ">
+                    <div className=" inline-flex items-center">
+                    <span className="text-[16px] mb-5 inline-block py-1 px-4 text-center text-[16px] leading-loose flex items-center ">
                       5 min <AiOutlineCalendar  className ="ml-2 mr-1 text-[18px]"/> 
-                      <p class="">
-                        12<span class="text-sm"><sup class="text-[10px]" >th</sup></span> Oct 2022
+                      <p className="">
+                        12<span className="text-sm"><sup className="text-[10px]" >th</sup></span> Oct 2022
                       </p>
                     </span>
                   </div>

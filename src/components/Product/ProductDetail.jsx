@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import {
   Breadcrumbs,
@@ -14,23 +15,23 @@ import { Link, useParams } from "react-router-dom";
 
 const data = [
   {
-    label: "Dashboard",
-    value: "dashboard",
+    label: "Description",
+    value: "Description",
     // icon: Square3Stack3DIcon,
     desc: `It really matters and then like it really doesn't matter.
     What matters is the people who are sparked by it. And the people
     who are like offended by it, it doesn't matter.`,
   },
   {
-    label: "Profile",
-    value: "profile",
+    label: "Additional Information",
+    value: "Additional Information",
     // icon: UserCircleIcon,
     desc: `Because it's about motivating the doers. Because I'm here
     to follow my dreams and inspire other people to follow their dreams, too.`,
   },
   {
-    label: "Settings",
-    value: "settings",
+    label: "Reviews [5]",
+    value: "Reviews [5]",
     // icon: Cog6ToothIcon,
     desc: `We're not always in the position that we want to be at.
     We're constantly growing. We're constantly making mistakes. We're
@@ -41,6 +42,16 @@ const data = [
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const [activeTab, setActiveTab] = useState(data[0].value)
+  // useEffect(() => {
+  //   // Hiển thị TabPanel của tab đầu tiên khi trang được tải lại
+  //   const firstTabPanel = document.querySelector(`[value="${activeTab}"]`);
+  //   if (firstTabPanel) {
+  //     firstTabPanel.style.display = "block";
+  //   }
+  // }, [activeTab]);
+  
 
   const { id } = useParams();
 
@@ -57,10 +68,11 @@ const ProductDetail = () => {
   }, []);
 
   return (
+    
     <div>
       <section className="overflow-hidden bg-white py-11 dark:bg-gray-800">
         <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
-            <Breadcrumbs className="mt-[80px] mb-[50px] " separator={<SlArrowRight className=" flex w-3 h-3 " strokeWidth={1.5} />}>
+            <Breadcrumbs className="mt-[80px] mb-[30px] bg-white" separator={<SlArrowRight className=" flex w-3 h-3 " strokeWidth={1.5} />}>
               <Link to="/" className="opacity-60 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,14 +82,14 @@ const ProductDetail = () => {
                 >
                   <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                 </svg>
-                <span class="ml-1">Home</span>
+                <span className="ml-1">Home</span>
               </Link>
               
 
               <Link to="/store" className="opacity-60">
                 <span>Store</span>
               </Link>
-              <div class="border-l border-black pl-[15px] ml-[7px] ">
+              <div className="border-l border-black pl-[15px] ml-[7px] ">
             <a>{product && product.title}</a>
 
               </div>
@@ -243,7 +255,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="w-32 mb-8 ">
                   <label
-                    for=""
+                    htmlFor=""
                     className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400"
                   >
                     Quantity
@@ -280,23 +292,29 @@ const ProductDetail = () => {
         </div>
       </section>
 
-      <div className="flex justify-center ">
-        <Tabs value="html" className="max-w-[50rem]">
-          <TabsHeader>
-            {data.map(({ label, value }) => (
-              <Tab key={value} value={value}>
-                {label}
-              </Tab>
-            ))}
+      <div className="flex justify-center  ">
+      <Tabs className="max-w-[50rem] overflow-visible">
+        <TabsHeader
+          className="rounded-none bg-transparent px-4 "
+          indicatorProps={{
+          className: "bg-transparent border-b-2 border-black shadow-none rounded-none",
+        }}>
+          {data.map(({ label, value }) => (
+          <Tab key={value} value={value}
+            onClick={() => setActiveTab(value)}
+            className={activeTab === value ? "text-black" : "text-gray-600"}>
+            {label}
+          </Tab>
+          ))}
           </TabsHeader>
           <TabsBody>
             {data.map(({ value, desc }) => (
-              <TabPanel key={value} value={value}>
-                {desc}
-              </TabPanel>
+            <TabPanel key={value} value={value}  className={activeTab === value ? 'block' : 'hidden'}>
+              {desc}
+            </TabPanel>
             ))}
           </TabsBody>
-        </Tabs>
+      </Tabs>
       </div>
     </div>
   );

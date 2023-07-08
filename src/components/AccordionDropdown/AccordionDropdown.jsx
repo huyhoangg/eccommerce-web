@@ -26,8 +26,8 @@ const filters = [
     id: "color",
     name: "Color",
     options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
+      { value: "white", label: "White" },
+      { value: "beige", label: "Beige" },
       { value: "blue", label: "Blue", checked: true },
       { value: "brown", label: "Brown", checked: false },
       { value: "green", label: "Green", checked: false },
@@ -63,7 +63,7 @@ export default function AccordionDropdown() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openMenu2, setOpenMenu2] = useState(false);
   const [openMenu3, setOpenMenu3] = useState(false);
-
+  const [checked , setChecked] = useState([])
 
   const [openAcc1, setOpenAcc1] = useState(true);
   const [openAcc2, setOpenAcc2] = useState(true);
@@ -78,14 +78,26 @@ export default function AccordionDropdown() {
   };
   const handleOpenAcc3 = () => {setOpenAcc3((cur) => !cur);
     openAcc3 ? setOpenMenu3(true) : setOpenMenu3(false);
-  
   }
 
+  const handleChange = (id) => {
+    setChecked((prev) => {
+      const isChecked = prev.includes(id);
+      if (isChecked) {
+        return prev.filter((value) => value !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+
+  };
+  console.log(checked);
   return (
+    
     <Fragment >
       <Accordion open={openAcc1} className="">
-        <AccordionHeader className="" onClick={handleOpenAcc1}>
-          Color
+        <AccordionHeader onClick={handleOpenAcc1}>
+          <span className="flex-1">Color</span>
           <BsChevronCompactUp
             strokeWidth={2.5}
             className={`h-3.5 w-3.5 transition-transform ${
@@ -94,20 +106,24 @@ export default function AccordionDropdown() {
           />
         </AccordionHeader>
           <AccordionBody className="flex flex-col overflow-visible">
-            {filters[0].options.map((color) => (
-              <Checkbox
-                className=" overflow-visible before:w-0"
-                containerProps={{
-                  className: "p-0 my-[0.75rem] mr-[0.75rem] rounded "
-                }}
-                key={color.value}
-                label={color.value}
-              />
-            ))}
+          {filters[0].options.map((color) => {
+            return (
+              <div className="inline-block  flex items-center " >
+                <Checkbox 
+                  className="overflow-visible before:w-0 "
+                  containerProps={{ className: "p-0 my-[0.75rem] mr-[0.75rem] rounded" }}
+                  checked={checked.includes(color.value)}
+                  onChange={() => handleChange(color.value)}
+                  />
+                  <span className="text-gray-600" style= {{cursor: 'pointer', userSelect: 'none'}} onClick={() => handleChange(color.value)}>{color.label}</span>
+              </div>
+            );
+          })}
           </AccordionBody>
       </Accordion>
       <Accordion open={openAcc2}>
-        <AccordionHeader onClick={handleOpenAcc2}>Category
+        <AccordionHeader onClick={handleOpenAcc2}>
+        <span className="flex-1">Category</span>
         <BsChevronCompactUp
             strokeWidth={2.5}
             className={`h-3.5 w-3.5 transition-transform ${
@@ -118,19 +134,25 @@ export default function AccordionDropdown() {
         
         <AccordionBody className="flex flex-col">
           {filters[1].options.map((category) => (
-            <Checkbox
+            <div className="inline-block  flex items-center " >
+              <Checkbox
               className=" overflow-visible before:w-0"
               containerProps={{
                 className: "p-0 my-[0.75rem] mr-[0.75rem] rounded "
               }}
+              checked={checked.includes(category.value)}
+              onChange={() => handleChange(category.value)}
               key={category.value}
-              label={category.value}
-            />
+              />
+              <span className="text-gray-600" style= {{cursor: 'pointer', userSelect: 'none'}} 
+              onClick={() => handleChange(category.value)}>{category.label}</span>
+          </div>
           ))}
         </AccordionBody>
       </Accordion>
       <Accordion open={openAcc3}>
-        <AccordionHeader onClick={handleOpenAcc3}>Size
+        <AccordionHeader onClick={handleOpenAcc3}>
+          <span className="flex-1">Size</span>
         <BsChevronCompactUp
             strokeWidth={2.5}
             className={` h-3.5 w-3.5 transition-transform ${
@@ -140,16 +162,22 @@ export default function AccordionDropdown() {
         </AccordionHeader>
         <AccordionBody>
           {filters[2].options.map((size) => (
-            <Checkbox
-            className=" overflow-visible before:w-0 mxr-[15px] "
-            containerProps={{
-              className: "p-0 my-[0.75rem] rounded "
-            }}
-            key={size.value}
-            label={
-                <div className="w-[20px] mx-[12px]">{size.value}</div>
-            }
-            />
+            <div className="inline-flex items-center">
+              <Checkbox
+                className="overflow-visible before:w-0 mxr-[15px]"
+                containerProps={{
+                  className: "p-0 my-[0.75rem] rounded"
+                }}
+                checked={checked.includes(size.value)}
+                onChange={() => handleChange(size.value)}
+                key={size.value}
+              />
+            <span className=" w-[20px] mx-[12px] text-gray-600 mt-[5px]" style={{ cursor: 'pointer', userSelect: 'none' }}
+                onClick={() => handleChange(size.value)}
+            >{size.label}</span>
+          </div>
+          
+            
           ))}
         </AccordionBody>
       </Accordion>
