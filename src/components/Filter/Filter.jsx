@@ -87,13 +87,13 @@ export const Filter = () => {
                       className="h-6 w-6"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       aria-hidden="true"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
@@ -146,7 +146,7 @@ export const Filter = () => {
                               aria-hidden="true"
                             >
                               <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
                                 clip-rule="evenodd"
                               />
@@ -169,7 +169,7 @@ export const Filter = () => {
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
-                                for="filter-mobile-color-0"
+                                htmlFor="filter-mobile-color-0"
                                 className="ml-3 min-w-0 flex-1 text-gray-500"
                               >
                                 {color.value}

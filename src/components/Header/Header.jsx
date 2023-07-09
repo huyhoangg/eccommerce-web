@@ -5,7 +5,7 @@ import Hero from "~/components/Hero/Hero";
 function Header() {
     return (
         <div className="bg-primary">
-            <NavBar />
+            <NavBar  />
             <Hero />
         </div>
     );
