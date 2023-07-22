@@ -60,7 +60,7 @@ function Register(){
       //                   type="email"
       //                   placeholder="Email"
       //                 />
-      //                   <p class=" invisible peer-invalid:visible text-pink-600 text-sm">
+      //                   <p className=" invisible peer-invalid:visible text-pink-600 text-sm">
       //                     Nhập sai tài khoản gmail !!!
       //                   </p>
       //               </div>
@@ -146,19 +146,19 @@ function Register(){
 
       // </section>
 
-      <div class="flex flex-wrap">
+      <div className="flex flex-wrap">
       <img
-      src="https://images.unsplash.com/flagged/photo-1624274555889-4a70c880579c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRhcm90fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+      src="https://images.unsplash.com/photo-1671377914227-397fa571a7e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTg1fHx0YXJvdCUyMGNhcmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
       alt="Photo by Lawrence Kayku on Unsplash"
-      class="w-full h-48 object-cover sm:h-screen sm:w-7/12 invisible sm:visible" />
+      className="w-full h-48 object-cover sm:h-screen sm:w-7/12 invisible sm:visible" />
 
-    <div class="w-full sm:w-5/12 mb-10">
-      <div class="container mx-auto h-full lg:p-10">
-        <header class="container mx-auto px-4 py-2 mt-10 lg:flex items-center h-full lg:mt-0">
-          <div class="w-full">
-            <h1 class="text-2xl font-bold lg:text-4xl">Đăng ký <span class="text-blue-600">tài khoản</span></h1>
-            <div class="w-24 h-2 bg-blue-300 my-4"></div>
-            <div class="mt-10">
+    <div className="w-full sm:w-5/12 mb-10">
+      <div className="container mx-auto h-full lg:p-10">
+        <header className="container mx-auto px-4 py-2 mt-10 lg:flex items-center h-full lg:mt-0">
+          <div className="w-full">
+            <h1 className="text-2xl font-bold lg:text-4xl">Đăng ký <span className="text-blue-600">tài khoản</span></h1>
+            <div className="w-24 h-2 bg-blue-300 my-4"></div>
+            <div className="mt-10">
             <form className=" bg-white rounded">
               <div className="mb-4 md:flex md:justify-between">
               <div className="w-full mb-4 md:mr-2 md:mb-0">
@@ -197,7 +197,7 @@ function Register(){
                 type="email"
                 placeholder="Email"
               />
-                <p class=" invisible peer-invalid:visible text-pink-600 text-sm">
+                <p className=" invisible peer-invalid:visible text-pink-600 text-sm">
                   Nhập sai tài khoản gmail !!!
                 </p>
             </div>
@@ -267,7 +267,7 @@ function Register(){
           
             
           </form>
-              <div class="flex  flex-col justify-center items-center mt-6">
+              <div className="flex  flex-col justify-center items-center mt-6">
               <span
                 className="md:text-[15px] inline-block text-sm text-gray-600 align-baseline"
                 href=""
