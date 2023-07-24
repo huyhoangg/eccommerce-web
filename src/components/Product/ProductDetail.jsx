@@ -293,6 +293,8 @@ const ProductDetail = () => {
       </section>
 
       <div className="flex justify-center  ">
+
+{/*         
       <Tabs className="max-w-[50rem] overflow-visible">
         <TabsHeader
           className="rounded-none bg-transparent px-4 "
@@ -309,12 +311,35 @@ const ProductDetail = () => {
           </TabsHeader>
           <TabsBody>
             {data.map(({ value, desc }) => (
-            <TabPanel key={value} value={value}  className={activeTab === value ? 'block' : 'hidden'}>
+            <TabPanel key={value} value={value}  >
               {desc}
             </TabPanel>
             ))}
           </TabsBody>
-      </Tabs>
+      </Tabs> */}
+
+       <Tabs value={activeTab} className="max-w-[50rem] overflow-visible">
+       <TabsHeader
+          className="rounded-none bg-transparent px-4  "
+          indicatorProps={{
+          className: "bg-transparent border-b-2 border-black shadow-none rounded-none",
+        }}>
+        {data.map(({ label, value }) => (
+          <Tab key={value} value={value}
+            onClick={() => setActiveTab(value)}
+            className={activeTab === value ? "text-black" : "text-gray-600"}>
+            {label}
+        </Tab>
+        ))}
+      </TabsHeader>
+      <TabsBody>
+        {data.map(({ value, desc }) => (
+          <TabPanel key={value} value={value} className="text-justify">
+            {desc}
+          </TabPanel>
+        ))}
+      </TabsBody>
+    </Tabs>
       </div>
     </div>
   );
