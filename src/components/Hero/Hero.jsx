@@ -5,7 +5,7 @@ import Mockup from "../../assets/navImg.png";
 
 function Hero() {
   return (
-    <section className="">
+    <section className="mt-[175px] sm:mt-0">
       <div className="mt-[80px] grid  px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 text-black">
         <div className=" place-self-center lg:col-span-7" style={{ maxWidth: '1280px',
     margin: '0 auto'}}>
@@ -26,7 +26,7 @@ function Hero() {
               <path
                 fillRule="evenodd"
                 d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
                 <span span style={{position: 'absolute', content: '',  height: '2px', bottom: '-16px', left: '-7px', right:'-7px', backgroundColor: 'black'}}></span>

@@ -12,8 +12,8 @@ function Blogs() {
     <div>
       <section className="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
         <div className="container mx-auto">
-          <div className="-mx-4 flex flex-wrap justify-center">
-            <div className="w-full px-4">
+          <div className="">
+            <div className="">
               <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
                 <h2 className="text-dark mb-4 text-3xl font-bold sm:text-4xl md:text-[40px]">
                 Blogs
@@ -22,7 +22,7 @@ function Blogs() {
               </div>
             </div>
           </div>
-          <div className="-mx-4 flex flex-wrap">
+          <div className="mx-4 flex flex-wrap">
             <div className="w-full px-4 md:w-1/2 lg:w-1/3">
               <div className="mx-auto mb-10 max-w-[370px]">
                 <div className="mb-8 overflow-hidden rounded">
@@ -35,7 +35,7 @@ function Blogs() {
                 <div>
                   <div className="text-center ">
                     <p
-                      href="javascript:void(0)"
+                      href=""
                       className="cursor-text text-dark  mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px] "
                     >
                       Cách đọc nghĩa ngược bài Tarot 
@@ -69,7 +69,7 @@ function Blogs() {
                   
                   <div className="text-center" >
                     <p
-                      href="javascript:void(0)"
+                      href=""
                       className="cursor-text text-dark mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px]"
                     >
                       Môi Trường Giải Bài Tarot
@@ -104,7 +104,7 @@ function Blogs() {
                  
                   <div  className="text-center">
                     <p
-                      href="javascript:void(0)"
+                      href=""
                       className=" cursor-text text-dark  mb-1 inline-block text-xl  sm:text-2xl lg:text-xl xl:text-[20px]"
                     >
                       Giải Bài Tarot Cho Bản Thân

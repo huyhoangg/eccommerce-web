@@ -12,7 +12,7 @@ function NewArrivalBanner() {
               src={Card}
             />
           </div>
-          <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col   items-center text-center">
+          <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col   items-center text-center mb-5">
             <p className="leading-relaxed text-center text-[24px] text-black font-semibold">
             Mới cập bến 
             </p>

@@ -1,5 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
 
 import {
   AiOutlineHeart,
@@ -83,10 +90,22 @@ const NavBar = () => {
               </Link>
             </nav>
             <div className="inline-flex items-center  text-[25px] border-0 py-1 px-3 mt-4 md:mt-0 text-black text-xl">
-              <TbUserExclamation className="mr-[30px]  hover:text-white" />
-              <LuSearch className="mr-[30px] hover:text-white" />
-              <AiOutlineHeart className="mr-[30px] hover:text-white" />
-              <AiOutlineShoppingCart onClick={openDrawerCart} className="mr-[30px] hover:text-white" />
+                <Menu placement="bottom-start">
+                  <MenuHandler>
+                    <button> <TbUserExclamation className="mr-[30px]  hover:text-gray-800" /></button>
+                  </MenuHandler>
+                  <MenuList>
+                    <MenuItem className="py-0 px-0"> 
+                      <Link to="/login" className="block w-full py-2 px-3"> Đăng Nhập</Link>
+                    </MenuItem>
+                    <MenuItem className="py-0 px-0">
+                      <Link to="/register" className="block w-full py-2 px-3"> Đăng Ký</Link>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              <LuSearch className="mr-[30px] hover:text-gray-800" />
+              <AiOutlineHeart className="mr-[30px] hover:text-gray-800" />
+              <AiOutlineShoppingCart onClick={openDrawerCart} className="mr-[30px] hover:text-gray-800" />
             </div>
           </div>
         </div>
