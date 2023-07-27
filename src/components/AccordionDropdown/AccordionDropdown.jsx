@@ -91,7 +91,6 @@ export default function AccordionDropdown() {
     });
 
   };
-  console.log(checked);
   return (
     
     <Fragment >

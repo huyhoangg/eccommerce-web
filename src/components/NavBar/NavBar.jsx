@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu,
@@ -6,6 +6,7 @@ import {
   MenuList,
   MenuItem,
   Button,
+  Badge,
 } from "@material-tailwind/react";
 
 import {
@@ -23,6 +24,7 @@ import {
   ThemeProvider,
 } from "@material-tailwind/react";
 import Cart from "../Cart/Cart";
+import { CartContext } from "~/contexts/CartContext";
 
 const themeCart = {
   drawer: {
@@ -41,12 +43,17 @@ const NavBar = () => {
   const openDrawerCart = () => setOpenCart(true);
   const closeDrawerCart = () => setOpenCart(false);
 
+  const cartProducts = useContext(CartContext);
+
   return (
     <>
       <div className="text-gray-400 body-font">
         <div className="w-full bg-white border-b border-gray-200 fixed top-0 z-50">
           <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-            <Link to="/" className="flex title-font font-medium items-center text-black mb-4 md:mb-0">
+            <Link
+              to="/"
+              className="flex title-font font-medium items-center text-black mb-4 md:mb-0"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -89,23 +96,37 @@ const NavBar = () => {
                 Liên hệ
               </Link>
             </nav>
-            <div className="inline-flex items-center  text-[25px] border-0 py-1 px-3 mt-4 md:mt-0 text-black text-xl">
-                <Menu placement="bottom-start">
-                  <MenuHandler>
-                    <button> <TbUserExclamation className="mr-[30px]  hover:text-gray-800" /></button>
-                  </MenuHandler>
-                  <MenuList>
-                    <MenuItem className="py-0 px-0"> 
-                      <Link to="/login" className="block w-full py-2 px-3"> Đăng Nhập</Link>
-                    </MenuItem>
-                    <MenuItem className="py-0 px-0">
-                      <Link to="/register" className="block w-full py-2 px-3"> Đăng Ký</Link>
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+            <div className="inline-flex items-center text-[25px] border-0 py-1 px-3 mt-4 md:mt-0 text-black text-xl">
+              <Menu placement="bottom-start">
+                <MenuHandler>
+                  <button>
+                    {" "}
+                    <TbUserExclamation className="mr-[30px]  hover:text-gray-800" />
+                  </button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem className="py-0 px-0">
+                    <Link to="/login" className="block w-full py-2 px-3">
+                      {" "}
+                      Đăng Nhập
+                    </Link>
+                  </MenuItem>
+                  <MenuItem className="py-0 px-0">
+                    <Link to="/register" className="block w-full py-2 px-3">
+                      {" "}
+                      Đăng Ký
+                    </Link>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
               <LuSearch className="mr-[30px] hover:text-gray-800" />
               <AiOutlineHeart className="mr-[30px] hover:text-gray-800" />
-              <AiOutlineShoppingCart onClick={openDrawerCart} className="mr-[30px] hover:text-gray-800" />
+              <Badge content={cartProducts.getTotalQuantity()}>
+                <AiOutlineShoppingCart
+                  onClick={openDrawerCart}
+                  className="mr-[30px] hover:text-gray-800"
+                />
+              </Badge>
             </div>
           </div>
         </div>

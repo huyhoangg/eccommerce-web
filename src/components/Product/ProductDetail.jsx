@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import {
   Breadcrumbs,
@@ -12,6 +12,7 @@ import {
 import { SlArrowRight } from "react-icons/sl";
 
 import { Link, useParams } from "react-router-dom";
+import { CartContext } from "~/contexts/CartContext";
 
 const data = [
   {
@@ -65,7 +66,9 @@ const ProductDetail = () => {
       setLoading(false);
     };
     fetchProduct();
-  }, []);
+  }, [id]);
+
+  const cartProducts = useContext(CartContext)
 
   return (
     
@@ -253,7 +256,7 @@ const ProductDetail = () => {
                     </button>
                   </div>
                 </div>
-                <div className="w-32 mb-8 ">
+                {/* <div className="w-32 mb-8 ">
                   <label
                     htmlFor=""
                     className="w-full text-xl font-semibold text-gray-700 dark:text-gray-400"
@@ -273,10 +276,10 @@ const ProductDetail = () => {
                       <span className="m-auto text-2xl font-thin">+</span>
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <div className="flex flex-wrap items-center -mx-4 ">
                   <div className="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
-                    <button className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                    <button onClick={() => cartProducts.addToCart(product.id, product)} className="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
                       Add to Cart
                     </button>
                   </div>

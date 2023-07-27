@@ -1,29 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProductList } from "../Product/ProductList";
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Button,
-} from "@material-tailwind/react";
-import { AiOutlineDown } from "react-icons/ai";
+import { Select, Option } from "@material-tailwind/react";
 import AccordionDropdown from "../AccordionDropdown/AccordionDropdown";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Most Popular", value: "a", current: true },
+  { name: "Best Rating", value: "b", current: false },
+  { name: "Newest", value: "c", current: false },
+  { name: "Price: Low to High", value: "price_ascending", current: false },
+  { name: "Price: High to Low", value: "price_descending", current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
+
 const filters = [
   {
     id: "color",
@@ -63,6 +50,48 @@ const filters = [
 ];
 
 export const Filter = () => {
+  const [subCategories, setSubCategories] = useState([]);
+  const [productByCategory, setProductByCategory] = useState([]);
+  const [data, setData] = useState([]);
+  const [sort, setSort] = useState("");
+
+  useEffect(() => {
+    fetch("https://api.escuelajs.co/api/v1/products")
+      .then((response) => response.json())
+      .then((data) => setData(data.slice(0, 30)));
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(
+        `https://api.escuelajs.co/api/v1/categories`
+      );
+      const data = await response.json();
+      setSubCategories(data);
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    setProductByCategory(data);
+  }, [data]);
+
+  const handleCategoryProduct = (cat) => {
+    const filter = data.filter((product) => product.category.name === cat);
+    sort ? handleSortProduct(filter, sort): setProductByCategory(filter);
+  };
+  // console.log("data", data);
+  const handleSortProduct = (products ,option) => {
+    let filter = [...products];
+    if (option === "price_descending") {
+      filter.sort((a, b) => b.price - a.price);
+    } else if (option === "price_ascending") {
+      filter.sort((a, b) => a.price - b.price);
+    }
+    setSort(option);
+    setProductByCategory(filter);
+  };
+
   return (
     <div>
       <div className="bg-white">
@@ -75,7 +104,7 @@ export const Filter = () => {
             <div className="fixed inset-0 bg-black bg-opacity-25"></div>
 
             <div className="fixed inset-0 z-40 flex">
-              <div className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+              <div className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl hidden">
                 <div className="flex items-center justify-between px-4">
                   <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                   <button
@@ -108,9 +137,12 @@ export const Filter = () => {
                   >
                     {subCategories.map((category) => (
                       <li key={category.name}>
-                        <a href="#" className="block px-2 py-3">
+                        <button
+                          onClick={() => setProductByCategory(category.name)}
+                          className="block px-2 py-3"
+                        >
                           {category.name}
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -191,19 +223,18 @@ export const Filter = () => {
                 New Arrivals
               </h1>
 
-              <Menu>
-                <MenuHandler>
-                  <Button className="bg-white text-black text-sm font-normal shadow-none hover:shadow-none capitalize flex justify-between items-center">
-                    Sort
-                    <AiOutlineDown />
-                  </Button>
-                </MenuHandler>
-                <MenuList>
+              <div className="w-40">
+                <Select
+                  onChange={(event) => handleSortProduct(productByCategory ,event)}
+                  label="Sort"
+                >
                   {sortOptions.map((option) => (
-                    <MenuItem key={option.name}>{option.name}</MenuItem>
+                    <Option key={option.name} value={option.value}>
+                      {option.name}
+                    </Option>
                   ))}
-                </MenuList>
-              </Menu>
+                </Select>
+              </div>
             </div>
 
             <section aria-labelledby="products-heading" className="pb-24 pt-6">
@@ -220,19 +251,24 @@ export const Filter = () => {
                   >
                     {subCategories.map((category) => (
                       <li key={category.name}>
-                        <a href="#" className="block px-2 py-3">
+                        <button
+                          onClick={(event) => {
+                            event.preventDefault();
+                            handleCategoryProduct(category.name);
+                          }}
+                          className="block px-2 py-3"
+                        >
                           {category.name}
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
 
-                  
-                  <AccordionDropdown/>
+                  <AccordionDropdown />
                 </form>
 
                 <div className="lg:col-span-3">
-                  <ProductList />
+                  <ProductList products={productByCategory} />
                 </div>
               </div>
             </section>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function RelatedProduct() {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ export default function RelatedProduct() {
             products.map((product) => (
               <div key={product.id} className="group relative">
                 <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                  <a href="#">
+                  <Link to={`/store/${product.id}`}>
                     <img
                       src={product.images[0]}
                       alt="Product"
@@ -66,7 +67,7 @@ export default function RelatedProduct() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}
