@@ -22,7 +22,7 @@ function CartItems() {
     <section className="mt-6">
       <div className="">
         <div>
-          <div className="overflow-y-auto max-h-[600px] overscroll-contain pt-6">
+          <div className="overflow-y-auto md:max-h-[400px] max-h-[300px] overscroll-contain pt-6">
             <ul className="-my-8">
               {cartProducts.products &&
                 cartProducts.products.map((product) => (
