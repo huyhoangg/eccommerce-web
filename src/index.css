@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.carousel-slider {
+    border-radius: 20px;
+} 
+
+.carousel .thumb{
+    width: 25% !important; 
+}
+.thumbs.animated{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.carousel .control-dots .dot{
+    height: 12px;
+    width: 12px;
+}
+
+@media screen and (max-width: 640px){
+    .carousel .thumb{
+        width: 50% !important; 
+    }
+}

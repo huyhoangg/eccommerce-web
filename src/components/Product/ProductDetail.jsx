@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import {
   Breadcrumbs,
-  Carousel,
   Tabs,
   TabsHeader,
   TabsBody,
@@ -10,6 +9,10 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import { SlArrowRight } from "react-icons/sl";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+import { GrNext,GrPrevious } from "react-icons/gr";
 
 import { Link, useParams } from "react-router-dom";
 import { CartContext } from "~/contexts/CartContext";
@@ -103,36 +106,51 @@ const ProductDetail = () => {
             <div className="w-full px-4 md:w-1/2 ">
               <div className=" top-0 z-1 overflow-hidden ">
                 <div className="relative mb-6 lg:mb-10 lg:h-2/4 ">
-                  <Carousel transition={{ duration: 1 }} className="rounded-xl">
-                    {loading
-                      ? ""
-                      : product.images.map((image) => (
-                          <img
-                            key={image}
-                            src={image}
-                            alt="image 1"
-                            className="h-full w-full object-cover"
-                          />
-                        ))}
-                  </Carousel>
-                </div>
-                <div className="flex-wrap justify-evenly hidden md:flex ">
-                  {loading
-                    ? ""
-                    : product.images.map((image) => (
-                        <div key={image} className="w-1/2 p-2 sm:w-1/4">
-                          <a
-                            href="#"
-                            className="block border border-blue-300 dark:border-transparent dark:hover:border-blue-300 hover:border-blue-300"
+                    <Carousel
+                      infiniteLoop = {true}
+                      autoPlay
+                      showIndicators
+                      showStatus={false}
+                      interval={5000}
+                      
+                      renderArrowPrev={(clickHandler, hasPrev) => {
+                        return (
+                          <div
+                            className={`${
+                              hasPrev ? "absolute" : "hidden"
+                            } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                            onClick={clickHandler}
                           >
-                            <img
+                            <GrPrevious className="w-9 h-9 text-white" />
+                          </div>
+                        );
+                      }}
+                      renderArrowNext={(clickHandler, hasNext) => {
+                        return (
+                          <div
+                            className={`${
+                              hasNext ? "absolute" : "hidden"
+                            } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                            onClick={clickHandler}
+                          >
+                            <GrNext className="w-9 h-9 text-white" />
+                          </div>
+                        );
+                      }}
+                    >
+                      {loading
+                        ? ""
+                        : product.images.map((image) => (
+                          <div >
+                            <img 
+                              key={image}
                               src={image}
-                              alt=""
-                              className="object-cover w-full lg:h-20"
+                              alt="image 1"
+                              className="w-[150px] h-full  object-cover "
                             />
-                          </a>
-                        </div>
-                      ))}
+                          </div>
+                          ))}
+                    </Carousel>
                 </div>
               </div>
             </div>
