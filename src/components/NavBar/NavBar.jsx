@@ -84,7 +84,7 @@ const NavBar = () => {
                 Cửa Hàng
               </Link>
               <Link
-                to="/about"
+                to="/about-us"
                 className="ml-[19px]  hover:text-gray-600 font-semibold"
               >
                 Về chúng tôi
