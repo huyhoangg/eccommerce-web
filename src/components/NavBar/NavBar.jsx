@@ -13,6 +13,8 @@ import {
   AiOutlineHeart,
   AiOutlineShoppingCart,
   AiOutlineClose,
+  AiOutlineLogin,
+  AiOutlineUserAdd,
 } from "react-icons/ai";
 import { LuSearch } from "react-icons/lu";
 import { TbUserExclamation } from "react-icons/tb";
@@ -25,6 +27,8 @@ import {
 } from "@material-tailwind/react";
 import Cart from "../Cart/Cart";
 import { CartContext } from "~/contexts/CartContext";
+import { AuthContext } from "~/contexts/AuthContext";
+import axios from "axios";
 
 const themeCart = {
   drawer: {
@@ -44,6 +48,18 @@ const NavBar = () => {
   const closeDrawerCart = () => setOpenCart(false);
 
   const cartProducts = useContext(CartContext);
+  const { userInfo, setUserInfo } = useContext(AuthContext);
+
+  async function handleLogOut(e) {
+    e.preventDefault();
+    try {
+      await axios.post("/v1/auth/logout");
+      setUserInfo(null);
+      console.log("logout successful");
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
@@ -98,25 +114,80 @@ const NavBar = () => {
             </nav>
             <div className="inline-flex items-center text-[25px] border-0 py-1 px-3 mt-4 md:mt-0 text-black text-xl">
               <Menu placement="bottom-start">
-                <MenuHandler>
-                  <button>
-                    {" "}
-                    <TbUserExclamation className="mr-[30px]  hover:text-gray-800" />
-                  </button>
+                <MenuHandler className="cursor-pointer">
+                  {!userInfo ? (
+                    <button>
+                      {" "}
+                      <TbUserExclamation className="mr-[30px]  hover:text-gray-800" />
+                    </button>
+                  ) : (
+                    <h3>hi, {userInfo.username} !</h3>
+                  )}
                 </MenuHandler>
                 <MenuList>
-                  <MenuItem className="py-0 px-0">
-                    <Link to="/login" className="block w-full py-2 px-3">
-                      {" "}
-                      Đăng Nhập
-                    </Link>
-                  </MenuItem>
-                  <MenuItem className="py-0 px-0">
-                    <Link to="/register" className="block w-full py-2 px-3">
-                      {" "}
-                      Đăng Ký
-                    </Link>
-                  </MenuItem>
+                  {userInfo ? (
+                    <>
+                      <MenuItem className="flex items-center gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="h-4 w-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                        <Typography variant="small" className="font-normal">
+                          Thông tin cá nhân
+                        </Typography>
+                      </MenuItem>
+                      <hr className="my-2 border-blue-gray-50" />
+                      <MenuItem
+                        className="flex items-center gap-2"
+                        onClick={handleLogOut}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="h-4 w-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5.636 5.636a9 9 0 1012.728 0M12 3v9"
+                          />
+                        </svg>
+                        <Typography variant="small" className="font-normal">
+                          Đăng xuất
+                        </Typography>
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem className="py-0 px-0 flex">
+                        <AiOutlineLogin />
+                        <Link to="/login" className="block w-full py-2 px-3">
+                          {" "}
+                          Đăng Nhập
+                        </Link>
+                      </MenuItem>
+                      <MenuItem className="py-0 px-0 flex">
+                        <AiOutlineUserAdd />
+                        <Link to="/register" className="block w-full py-2 px-3">
+                          {" "}
+                          Đăng Ký
+                        </Link>
+                      </MenuItem>
+                    </>
+                  )}
                 </MenuList>
               </Menu>
               <LuSearch className="mr-[30px] hover:text-gray-800" />

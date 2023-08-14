@@ -2,22 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { CartContext } from "~/contexts/CartContext";
 
 function CartItems() {
-  const [products, setProducts] = useState([]);
-
   const cartProducts = useContext(CartContext);
 
-  const shippingFee = 8
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     const response = await fetch(
-  //       `https://api.escuelajs.co/api/v1/products?offset=0&limit=5`
-  //     );
-  //     const data = await response.json();
-  //     setProducts(data);
-  //   };
-  //   fetchProduct();
-  // }, []);
-  console.log(cartProducts.products);
+  const shippingFee = 8;
   return (
     <section className="mt-6">
       <div className="">
@@ -27,13 +14,13 @@ function CartItems() {
               {cartProducts.products &&
                 cartProducts.products.map((product) => (
                   <li
-                    key={product.id}
+                    key={product.productId}
                     className="flex flex-col space-y-3 py-6 pr-2 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
                   >
                     <div className="shrink-0 flex justify-center items-center">
                       <img
                         className="h-24 w-24 max-w-full rounded-lg object-cover"
-                        src={product.productDetail.images[0]}
+                        src={product.productDetail.imageURLs[0]}
                         alt=""
                       />
                     </div>
@@ -42,10 +29,10 @@ function CartItems() {
                       <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
                         <div className="pr-8 sm:pr-5">
                           <p className="text-base font-semibold text-gray-900">
-                            {product.productDetail.title}
+                            {product.productDetail.name}
                           </p>
                           <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
-                            {product.productDetail.category.name}
+                            {product.productDetail.category.categoryName}
                           </p>
                         </div>
 
@@ -57,19 +44,22 @@ function CartItems() {
                         <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
                           <button
                             onClick={() =>
-                              cartProducts.removeFromCart(product.id)
+                              cartProducts.removeFromCart(product.productId)
                             }
                             className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400"
                           >
                             <span className="m-auto text-2xl font-thin">-</span>
                           </button>
                           <p className="flex justify-center items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">
-                            {cartProducts.getQuantity(product.id)}
+                            {cartProducts.getQuantity(product.productId)}
                           </p>
                           <button
-                            onClick={() =>
-                              cartProducts.addToCart(product.id, product)
-                            }
+                            onClick={() => {
+                              cartProducts.addToCart(
+                                product.productId,
+                                product
+                              );
+                            }}
                             className="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400"
                           >
                             <span className="m-auto text-2xl font-thin">+</span>
@@ -82,7 +72,7 @@ function CartItems() {
                           type="button"
                           className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
                           onClick={() => {
-                            cartProducts.removeAllCart(product.id);
+                            cartProducts.removeAllCart(product.productId);
                           }}
                         >
                           <svg
@@ -117,7 +107,9 @@ function CartItems() {
             </div>
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-400">Shipping</p>
-              <p className="text-lg font-semibold text-gray-900">${shippingFee}</p>
+              <p className="text-lg font-semibold text-gray-900">
+                ${shippingFee}
+              </p>
             </div>
           </div>
           <div className="mt-6 flex items-center justify-between">
