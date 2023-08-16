@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Register from "~/components/Form/Register";
+import AboutUs from "~/components/Information/AboutUs";
 
 function RegisterPage() {
   return(
     <div>
-      <Register />
+      <AboutUs />
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -5,13 +6,14 @@ export default function RelatedProduct() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await fetch(
-        `https://api.escuelajs.co/api/v1/products?offset=0&limit=4`
-      );
-      const data = await response.json();
-      setProducts(data);
-    };
+    async function fetchProduct() {
+      try {
+        const response = await axios.get(`/v1/public/products?limit=4`);
+        setProducts(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
     fetchProduct();
   }, []);
 
@@ -25,20 +27,20 @@ export default function RelatedProduct() {
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products &&
             products.map((product) => (
-              <div key={product.id} className="group relative">
+              <div key={product._id} className="group relative">
                 <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                  <Link to={`/store/${product.id}`}>
+                  <Link to={`/store/${product._id}`}>
                     <img
-                      src={product.images[0]}
+                      src={product.imageURLs[0]}
                       alt="Product"
                       className="h-80 w-72 object-cover rounded-t-xl"
                     />
                     <div className="px-4 py-3 w-72">
                       <span className="text-gray-400 mr-3 uppercase text-xs">
-                        Brand
+                        {product.type}
                       </span>
                       <p className="text-lg font-bold text-black truncate block capitalize">
-                        {product.title}
+                        {product.name}
                       </p>
                       <div className="flex items-center">
                         <p className="text-lg font-semibold text-black cursor-auto my-3">

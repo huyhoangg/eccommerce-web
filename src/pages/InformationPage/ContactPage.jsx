@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Register from "~/components/Form/Register";
+import Contact from "~/components/Information/Contact";
 
 function RegisterPage() {
   return(
     <div>
-      <Register />
+      <Contact />
     </div>
   )
 }
