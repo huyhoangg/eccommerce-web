@@ -1,5 +1,7 @@
 import React from "react";
 import { Textarea } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <div>
@@ -44,28 +46,37 @@ function Footer() {
               <h2 className="title-font text-sm font-semibold text-gray-600 tracking-[1px]  mb-6">HỖ TRỢ</h2>
               <nav className="list-none mb-10 text-black">
                 <li className="mb-6">
+                <Link
+                to="/faq/payment">
                   <a
                     href=""
                     className="hover:underline "
                   >
                     Các phương thức thanh toán
                   </a>
+                  </Link>
                 </li>
                 <li className="mb-6">
+                <Link
+                to="/faq/refund">
                   <a
                     href=""
                     className="hover:underline"
                   >
                     Hoàn tiền
                   </a>
+                  </Link>
                 </li>
                 <li className="mb-6">
+                <Link
+                to="/faq/policy">
                   <a
                     href=""
                     className="hover:underline"
                   >
                     Chính sách & quyền riêng tư
                   </a>
+                  </Link>
                 </li>
               </nav>
             </div>

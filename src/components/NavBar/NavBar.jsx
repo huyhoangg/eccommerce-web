@@ -100,7 +100,7 @@ const NavBar = () => {
                 Cửa Hàng
               </Link>
               <Link
-                to="/about"
+                to="/about-us"
                 className="ml-[19px]  hover:text-gray-600 font-semibold"
               >
                 Về chúng tôi
@@ -195,7 +195,7 @@ const NavBar = () => {
               <Badge content={cartProducts.getTotalQuantity()}>
                 <AiOutlineShoppingCart
                   onClick={openDrawerCart}
-                  className="mr-[30px] hover:text-gray-800"
+                  className="mr-[15px] hover:text-gray-800"
                 />
               </Badge>
             </div>
