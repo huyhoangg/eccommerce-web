@@ -173,14 +173,14 @@ const NavBar = () => {
                   ) : (
                     <>
                       <MenuItem className="py-0 px-0 flex">
-                        <AiOutlineLogin />
+                        <AiOutlineLogin className="mt-[9px]"/>
                         <Link to="/login" className="block w-full py-2 px-3">
                           {" "}
                           Đăng Nhập
                         </Link>
                       </MenuItem>
                       <MenuItem className="py-0 px-0 flex">
-                        <AiOutlineUserAdd />
+                        <AiOutlineUserAdd className="mt-[9px]" />
                         <Link to="/register" className="block w-full py-2 px-3">
                           {" "}
                           Đăng Ký
