@@ -10,31 +10,63 @@ function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [cfPassword, setCfPassword] = useState("");
+  const [isPasswordMatch, setIsPasswordMatch] = useState(true);
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [isPasswordBlankError, setIsPasswordBlankError] = useState(false)
+  const [isCPasswordBlankError, setIsCPasswordBlankError] = useState(false)
 
   const authContext = useContext(AuthContext);
 
+
+  const hanglePassWord = (e) => {
+    setPassword(e.target.value);
+    setIsPasswordBlankError(false); 
+  }
+
+  const handleConfirmPassword = (e) => {
+    setCfPassword(e.target.value);
+    setIsPasswordMatch(e.target.value === password);
+    setIsCPasswordBlankError(false)
+  };
+
+  
   async function handleRegisterSubmit(e) {
     e.preventDefault();
-    try {
-      await axios.post("/v1/auth/register", {
-        email,
-        username,
-        password,
-        firstName: fullname,
-      });
-      const user = await axios.post("/v1/auth/login", { email, password });
-      authContext.setUserInfo(user.data);
-      console.log("register successful");
-      console.log("login successful");
-      setRedirect(true);
-    } catch (e) {
-      setErrorMessage("error");
+    if (!isPasswordMatch ) {
+      return;
     }
-  }
+     else if (password.trim() === "" ) {
+      setIsPasswordBlankError(true);
+      console.log(Password)
+
+      return;
+    }
+     else if (cfPassword.trim() === "")
+    {
+      setIsCPasswordBlankError(true)
+      console.log(cfPassword)
+      return;
+    }
+      try {
+        await axios.post("/v1/auth/register", {
+          email,
+          username,
+          password,
+          firstName: fullname,
+        });
+        const user = await axios.post("/v1/auth/login", { email, password });
+        authContext.setUserInfo(user.data);
+        console.log("register successful");
+        console.log("login successful");
+        setRedirect(true);
+      } catch (e) {
+        setErrorMessage("error");
+      }
+
+    }
 
   if (redirect) {
     return <Navigate to={"/"} />;
@@ -127,14 +159,14 @@ function Register() {
                       </label>
                       <div className="flex relative ">
                         <input
-                          className="w-full pl-3 pr-8 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none  focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"
+                          className="w-full pl-3 pr-2 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none  focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"
                           id="password"
-                          type={showPass ? "text" : "password"}
+                          type="password"
                           placeholder="***************************************"
                           value={password}
-                          onChange={(e) => setPassword(e.target.value)}
+                          onChange={hanglePassWord}
                         />
-                        <button
+                        {/* <button
                           type="button"
                           onClick={() => setshowPass(!showPass)}
                           className="absolute right-2 bg-transparent flex items-center justify-center text-gray-700 mt-[7.5px]"
@@ -176,8 +208,9 @@ function Register() {
                               ></path>
                             </svg>
                           )}
-                        </button>
+                        </button> */}
                       </div>
+                      {isPasswordBlankError && <p className="text-red-500 text-[13px]">Password không được để trống.</p>}
                     </div>
                     <div className="w-full   md:ml-2">
                       <label
@@ -188,14 +221,16 @@ function Register() {
                       </label>
                       <div className="flex relative ">
                         <input
-                          className="w-full pl-3 pr-8 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none  focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"
+                          className={`w-full pl-3 pr-2  py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:ring-1 focus:ring-gray-600 ${
+                            !isPasswordMatch && cfPassword !== ""  ? "border-pink-500  focus:border-pink-500 focus:ring-pink-500 focus:outline-none " : ""
+                          }`}
                           id="c_password"
                           type={showCPass ? "text" : "password"}
                           placeholder="***************************************"
                           value={cfPassword}
-                          onChange={(e) => setCfPassword(e.target.value)}
+                          onChange={handleConfirmPassword}
                         />
-                        <button
+                        {/* <button
                           type="button"
                           onClick={() => setshowCPass(!showCPass)}
                           className="absolute right-2 bg-transparent flex items-center justify-center text-gray-700 mt-[7.5px]"
@@ -238,7 +273,12 @@ function Register() {
                             </svg>
                           )}
                         </button>
+                        */}
                       </div>
+                      {!isPasswordMatch && cfPassword !== "" && (
+                      <p className="text-red-500 text-[13px]">Confirm password không đúng</p>
+                      )}
+                       {isCPasswordBlankError && <p className="text-red-500 text-[13px]">Confirm Password không được để trống.</p>}
                     </div>
                   </div>
                   <p className="text-red-400">{errorMessage}</p>
