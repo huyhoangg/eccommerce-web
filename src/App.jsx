@@ -9,6 +9,8 @@ import ForgotPage from "~/pages/AuthenticPage/ForgotPage";
 import { useContext } from "react";
 import { AuthContext } from "~/contexts/AuthContext";
 import ProtectedRoutes from "~/components/ProtectedRoutes/ProtectedRoutes";
+import CheckoutPage from "~/pages/CheckoutPage/CheckoutPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -25,6 +27,9 @@ function App() {
         <Route path="/login" element={!userInfo ? <LoginPage /> : <Navigate to="/store"/>} />
         <Route path="/register" element={!userInfo ? <RegisterPage /> : <Navigate to="/"/>} />
         <Route path="/forgotpass" element={<ForgotPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+
         {/* <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
         </Route> */}
