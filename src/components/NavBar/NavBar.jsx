@@ -100,7 +100,7 @@ const NavBar = () => {
                 Cửa Hàng
               </Link>
               <Link
-                to="/about"
+                to="/about-us"
                 className="ml-[19px]  hover:text-gray-600 font-semibold"
               >
                 Về chúng tôi
@@ -173,14 +173,14 @@ const NavBar = () => {
                   ) : (
                     <>
                       <MenuItem className="py-0 px-0 flex">
-                        <AiOutlineLogin />
+                        <AiOutlineLogin className="mt-[9px]"/>
                         <Link to="/login" className="block w-full py-2 px-3">
                           {" "}
                           Đăng Nhập
                         </Link>
                       </MenuItem>
                       <MenuItem className="py-0 px-0 flex">
-                        <AiOutlineUserAdd />
+                        <AiOutlineUserAdd className="mt-[9px]" />
                         <Link to="/register" className="block w-full py-2 px-3">
                           {" "}
                           Đăng Ký
@@ -195,7 +195,7 @@ const NavBar = () => {
               <Badge content={cartProducts.getTotalQuantity()}>
                 <AiOutlineShoppingCart
                   onClick={openDrawerCart}
-                  className="mr-[30px] hover:text-gray-800"
+                  className="mr-[15px] hover:text-gray-800"
                 />
               </Badge>
             </div>
