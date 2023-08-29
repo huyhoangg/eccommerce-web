@@ -5,15 +5,15 @@ export const ProductList = ({ products }) => {
   return (
     <>
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container px-5 md:py-24 mx-auto">
           <div className="flex flex-wrap -m-4">
             {products.map((item) => (
-              <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
+              <div key={item._id} className="lg:w-1/4 md:w-1/2 md:p-4 mb-[30px] w-full">
                 <Link to={`/store/${item._id}`}>
-                  <a className="block relative h-48 rounded overflow-hidden">
+                  <a className="block relative md:h-48  rounded overflow-hidden">
                     <img
                       alt="ecommerce"
-                      className="object-cover object-center w-full h-full block"
+                      className="object-cover object-center  w-full h-full block"
                       src={item.imageURLs[0]}
                     />
                   </a>
