@@ -30,11 +30,8 @@ const dataTab = [
     value: "Additional Information",
   },
   {
-    label: "Reviews [5]",
-    value: "Reviews [5]",
-    desc: `We're not always in the position that we want to be at.
-    We're constantly growing. We're constantly making mistakes. We're
-    constantly trying to express ourselves and actualize our dreams.`,
+    label: "Reviews",
+    value: "Reviews",
   },
 ];
 
@@ -234,7 +231,7 @@ const ProductDetail = () => {
                       </li>
                     </ul>
                     <p className="text-xs dark:text-gray-400 ">
-                      (2 customer reviews)
+                      ({reviews && reviews.length} customer reviews)
                     </p>
                   </div>
                   <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
