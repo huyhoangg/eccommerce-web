@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Menu,
   MenuHandler,
@@ -29,6 +29,7 @@ import Cart from "../Cart/Cart";
 import { CartContext } from "~/contexts/CartContext";
 import { AuthContext } from "~/contexts/AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const themeCart = {
   drawer: {
@@ -50,12 +51,16 @@ const NavBar = () => {
   const cartProducts = useContext(CartContext);
   const { userInfo, setUserInfo } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   async function handleLogOut(e) {
     e.preventDefault();
     try {
       await axios.post("/v1/auth/logout");
       setUserInfo(null);
       console.log("logout successful");
+      toast.success("logout successful, goodbye!")
+      navigate("/")
     } catch (e) {
       console.log(e);
     }
@@ -142,9 +147,11 @@ const NavBar = () => {
                             d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                           />
                         </svg>
-                        <Typography variant="small" className="font-normal">
-                          Thông tin cá nhân
-                        </Typography>
+                        <Link to="/profile">
+                          <Typography variant="small" className="font-normal">
+                            Thông tin cá nhân
+                          </Typography>
+                        </Link>
                       </MenuItem>
                       <hr className="my-2 border-blue-gray-50" />
                       <MenuItem
@@ -173,7 +180,7 @@ const NavBar = () => {
                   ) : (
                     <>
                       <MenuItem className="py-0 px-0 flex">
-                        <AiOutlineLogin className="mt-[9px]"/>
+                        <AiOutlineLogin className="mt-[9px]" />
                         <Link to="/login" className="block w-full py-2 px-3">
                           {" "}
                           Đăng Nhập

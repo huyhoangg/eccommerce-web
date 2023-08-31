@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Input,
-  Button,
   Tabs,
   TabsHeader,
   Tab,
@@ -11,72 +9,10 @@ import {
 import axios from "axios";
 import AccountInformation from "./AccountInformation";
 import OrderHistory from "./OrderHistory";
+import Voucher from "./Voucher";
 
-const sortOptions = [
-  { name: "Most Popular", value: "a", current: true },
-  { name: "Best Rating", value: "b", current: false },
-  { name: "Newest", value: "c", current: false },
-  { name: "Price: Low to High", value: "price_ascending", current: false },
-  { name: "Price: High to Low", value: "price_descending", current: false },
-];
 
 export const Profile = () => {
-  const [productByCategory, setProductByCategory] = useState([]);
-  const [data, setData] = useState([]);
-  const [sort, setSort] = useState("");
-
-  useEffect(() => {
-    async function getProducts() {
-      try {
-        const response = await axios.get("/v1/public/products");
-        setData(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await axios.get(`/v1/public/categories`);
-        setCategories(response.data);
-        setSubCategories(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    setProductByCategory(data);
-  }, [data]);
-
-  const handleCategoryProduct = (cat) => {
-    const filter = data.filter((product) => product.category.name === cat);
-    sort ? handleSortProduct(filter, sort) : setProductByCategory(filter);
-  };
-  // console.log("data", data);
-  const handleSortProduct = (products, option) => {
-    let filter = [...products];
-    if (option === "price_descending") {
-      filter.sort((a, b) => b.price - a.price);
-    } else if (option === "price_ascending") {
-      filter.sort((a, b) => a.price - b.price);
-    }
-    setSort(option);
-    setProductByCategory(filter);
-  };
-
-  const handleSearch = (event) => {
-    const searchKw = event.target.value.toLowerCase();
-    const filter = data.filter((product) =>
-      product.name.toLowerCase().includes(searchKw)
-    );
-    setProductByCategory(filter);
-  };
 
   return (
     <div>
@@ -175,6 +111,9 @@ export const Profile = () => {
                 </TabPanel>
                 <TabPanel key={"Order"} value={"Order"} className="py-0 px-10">
                   <OrderHistory />
+                </TabPanel>
+                <TabPanel key={"Voucher"} value={"Voucher"} className="py-0 px-10">
+                  <Voucher />
                 </TabPanel>
               </TabsBody>
             </Tabs>

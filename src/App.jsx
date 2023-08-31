@@ -8,14 +8,15 @@ import RegisterPage from "~/pages/AuthenticPage/RegisterPage";
 import ForgotPage from "~/pages/AuthenticPage/ForgotPage";
 import Contact from "~/pages/InformationPage/ContactPage";
 import AboutUs from "~/pages/InformationPage/AboutUsPage";
-import FAQPage from "~/pages/InformationPage/FAQPage"
-
+import FAQPage from "~/pages/InformationPage/FAQPage";
 
 import { useContext } from "react";
 import { AuthContext } from "~/contexts/AuthContext";
 import ProtectedRoutes from "~/components/ProtectedRoutes/ProtectedRoutes";
 import CheckoutPage from "~/pages/CheckoutPage/CheckoutPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import "react-toastify/dist/ReactToastify.css";
+import ThankYouPage from "~/pages/InformationPage/ReturnPaymentPage";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -29,11 +30,22 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/store" element={<ListProductsPage />} />
         <Route path="/store/:id" element={<ProductDetailPage />} />
-        <Route path="/login" element={!userInfo ? <LoginPage /> : <Navigate to="/store"/>} />
-        <Route path="/register" element={!userInfo ? <RegisterPage /> : <Navigate to="/"/>} />
+        <Route
+          path="/login"
+          element={!userInfo ? <LoginPage /> : <Navigate to="/store" />}
+        />
+        <Route
+          path="/register"
+          element={!userInfo ? <RegisterPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile"
+          element={userInfo ? <ProfilePage /> : <Navigate to="/" />}
+        />
+        <Route path="/thanks" element={<ThankYouPage />} />
+
         <Route path="/forgotpass" element={<ForgotPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
 
         <Route path="/contact" element={<Contact />} />
         <Route path="/about-us" element={<AboutUs />} />
@@ -42,6 +54,7 @@ function App() {
           <Route path="/home" element={<Home />} />
         </Route> */}
       </Routes>
+
     </div>
   );
 }

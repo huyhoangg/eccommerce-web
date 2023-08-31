@@ -1,15 +1,48 @@
+import axios from "axios";
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CartContext } from "~/contexts/CartContext";
 
 function CartItems() {
-  const cartProducts = useContext(CartContext);
-
   const shippingFee = 8;
+
+  const cartProducts = useContext(CartContext);
+  const [total, setTotal] = useState(0);
+
+  async function handlePay(e) {
+    e.preventDefault();
+    let orderId = "";
+    try {
+      const res = await axios.post(`/v1/user/createInvoice`, {amount: total});
+      orderId = res.data._id;
+    } catch (e) {
+      console.log(e);
+      toast.error("fail to create invoice!");
+    }
+    try {
+      const res = await axios.post("/v1/user/create_payment_url", {
+        amount: total,
+        orderId,
+      });
+      const redirectUrl = res.data.redirectUrl;
+      // console.log(res.data);
+      window.location.href = redirectUrl;
+    } catch (e) {
+      console.log(e);
+      toast.error("something went wrong!");
+    }
+  }
+
+  useEffect(() => {
+    setTotal(cartProducts.getTotalPrice() + shippingFee);
+  }, [cartProducts.products]);
+
   return (
     <section className="mt-6">
       <div className="">
         <div>
-        <div className="overflow-y-auto md:max-h-[600px] max-h-[500px] overscroll-contain pt-6">
+          <div className="overflow-y-auto md:max-h-[600px] max-h-[500px] overscroll-contain pt-6">
             <ul className="-my-8">
               {cartProducts.products &&
                 cartProducts.products.map((product) => (
@@ -116,7 +149,7 @@ function CartItems() {
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
               <span className="text-xs font-normal text-gray-400">USD</span>{" "}
-              {shippingFee + cartProducts.getTotalPrice()}
+              {total}
             </p>
           </div>
 
@@ -124,6 +157,7 @@ function CartItems() {
             <button
               type="button"
               className="group inline-flex w-full items-center justify-center rounded-md bg-gray-900 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+              onClick={handlePay}
             >
               Checkout
               <svg

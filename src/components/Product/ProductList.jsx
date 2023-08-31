@@ -6,6 +6,7 @@ export const ProductList = ({ products }) => {
     <>
       <section className="text-gray-600 body-font">
         <div className="container px-5 md:py-24 mx-auto">
+
           <div className="flex flex-wrap -m-4">
             {products.map((item) => (
               <div key={item._id} className="lg:w-1/4 md:w-1/2 md:p-4 mb-[30px] w-full">
