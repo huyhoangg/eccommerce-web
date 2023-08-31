@@ -2,6 +2,7 @@ import { Input, Button, Typography } from "@material-tailwind/react";
 import axios from "axios";
 
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { AuthContext } from "~/contexts/AuthContext";
 
 function AccountInformation() {
@@ -25,8 +26,10 @@ function AccountInformation() {
   const handleSaveUser = async () => {
     try {
       await axios.post("/v1/user/profile", user);
+      toast.success("updated your information!");
     } catch (e) {
       console.log(e);
+      toast.error("something went wrong!");
     }
   };
 

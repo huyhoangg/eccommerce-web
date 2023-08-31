@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "~/contexts/AuthContext";
+import { toast } from "react-toastify";
 
 function Login() {
   const [showPass, setShowPass] = useState(false);
@@ -17,6 +18,8 @@ function Login() {
       const user = await axios.post("/v1/auth/login", { email, password });
       authContext.setUserInfo(user.data);
       console.log("login successful");
+      toast.success(`welcome, ${user.data.username}`)
+
     } catch (e) {
       setErrorMessage(e.response.data);
     }

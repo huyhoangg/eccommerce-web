@@ -7,6 +7,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Rating,
 } from "@material-tailwind/react";
 import { SlArrowRight } from "react-icons/sl";
 import { Carousel } from "react-responsive-carousel";
@@ -39,6 +40,8 @@ const dataTab = [
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
+  const [reviews, setReviews] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
   const [activeTab, setActiveTab] = useState(dataTab[0].value);
@@ -63,6 +66,18 @@ const ProductDetail = () => {
       }
     }
     fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    async function fetchReview() {
+      try {
+        const response = await axios.get(`/v1/public/getProductReview/${id}`);
+        setReviews(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchReview();
   }, [id]);
 
   const cartProducts = useContext(CartContext);
@@ -339,7 +354,44 @@ const ProductDetail = () => {
               key={dataTab[2].value}
               value={dataTab[2].value}
               className="text-justify"
-            ></TabPanel>
+            >
+              {reviews ? (
+                reviews.map((review) => (
+                  <div
+                    key={review._id}
+                    className="pt-10 lg:grid lg:grid-cols-12 lg:gap-x-8"
+                  >
+                    <div className="lg:col-start-5 lg:col-span-8 xl:col-start-4 xl:col-span-9 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:items-start">
+                      <div className="flex items-center xl:col-span-1">
+                        <div className="flex items-center">
+                          <Rating value={review.rating} readonly />
+                        </div>
+                        <p className="ml-3 text-sm text-gray-700">
+                          <span className="sr-only"> out of 5 stars</span>
+                        </p>
+                      </div>
+
+                      <div className="mt-4 lg:mt-6 xl:mt-0 xl:col-span-2">
+                        <h3 className="text-sm font-medium text-green-500">
+                          {review.content}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 flex items-center text-sm lg:mt-0 lg:col-start-1 lg:col-span-4 lg:row-start-1 lg:flex-col lg:items-start xl:col-span-3">
+                      <p className="font-medium text-gray-900">
+                        {review.reviewer.username}
+                      </p>
+                      <time className="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0">
+                        {review.reviewDay.split("T")[0]}
+                      </time>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h1 className="text-center text-red-400">None of review yet</h1>
+              )}
+            </TabPanel>
           </TabsBody>
         </Tabs>
       </div>
