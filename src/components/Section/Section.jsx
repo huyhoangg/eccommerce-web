@@ -42,7 +42,7 @@ function Section() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-gray-700">150.000đ</p>
                   </div>
                 </a>
               </li>
@@ -60,7 +60,7 @@ function Section() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-gray-700">150.000đ</p>
                   </div>
                 </a>
               </li>

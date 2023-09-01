@@ -30,7 +30,7 @@ function NewArrivals() {
                 <h2 className="text-[16px] text-black font-medium title-font mb-1">
                 Golden Black Cat Tarot
                 </h2>
-                <p className="leading-relaxed font-semibold text-[24px] text-black">799.000 VNĐ</p>
+                <p className="leading-relaxed font-semibold text-[24px] text-black">799.000 đ</p>
               </div>
             </div>
             <div className="xl:w-1/4 md:w-1/2 p-4">
@@ -44,7 +44,7 @@ function NewArrivals() {
                 <h2 className="text-[16px] text-black font-medium title-font mb-1">
                 Dark Fairytale Tarot
                 </h2>
-                <p className="leading-relaxed font-semibold text-[24px] text-black">599.000 VNĐ</p>
+                <p className="leading-relaxed font-semibold text-[24px] text-black">599.000 đ</p>
               </div>
             </div>
             <div className="xl:w-1/4 md:w-1/2 p-4">
@@ -58,7 +58,7 @@ function NewArrivals() {
                 <h2 className="text-[16px] text-black font-medium title-font mb-1">
                 After Tarot 
                 </h2>
-                <p className="leading-relaxed font-semibold text-[24px] text-black">599.000 VNĐ</p>
+                <p className="leading-relaxed font-semibold text-[24px] text-black">599.000 đ</p>
               </div>
             </div>
             <div className="xl:w-1/4 md:w-1/2 p-4">
@@ -72,7 +72,7 @@ function NewArrivals() {
                 <h2 className="text-[16px] text-black font-medium title-font mb-1">
                 Animal Totem Tarot
                 </h2>
-                <p className="leading-relaxed font-semibold text-[24px] text-black">800.000 VNĐ</p>
+                <p className="leading-relaxed font-semibold text-[24px] text-black">800.000 đ</p>
               </div>
             </div>
           </div>
