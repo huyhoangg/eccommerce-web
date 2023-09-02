@@ -11,8 +11,8 @@ import AccountInformation from "./AccountInformation";
 import OrderHistory from "./OrderHistory";
 import Voucher from "./Voucher";
 
-
 export const Profile = () => {
+  const [activeTab, setActiveTab] = useState("Account");
 
   return (
     <div>
@@ -73,6 +73,7 @@ export const Profile = () => {
                 <Tab
                   key={"Account"}
                   value={"Account"}
+                  onClick={() => setActiveTab("Account")}
                   className="place-items-start text-xl"
                 >
                   <div className="flex items-center gap-2">
@@ -83,6 +84,7 @@ export const Profile = () => {
                 <Tab
                   key={"Order"}
                   value={"Order"}
+                  onClick={() => setActiveTab("Order")}
                   className="place-items-start text-xl"
                 >
                   <div className="flex items-center gap-2">
@@ -93,6 +95,7 @@ export const Profile = () => {
                 <Tab
                   key={"Voucher"}
                   value={"Voucher"}
+                  onClick={() => setActiveTab("Voucher")}
                   className="place-items-start text-xl"
                 >
                   <div className="flex items-center gap-2">
@@ -112,8 +115,12 @@ export const Profile = () => {
                 <TabPanel key={"Order"} value={"Order"} className="py-0 px-10">
                   <OrderHistory />
                 </TabPanel>
-                <TabPanel key={"Voucher"} value={"Voucher"} className="py-0 px-10">
-                  <Voucher />
+                <TabPanel
+                  key={"Voucher"}
+                  value={"Voucher"}
+                  className="py-0 px-10"
+                >
+                  {activeTab === "Voucher" && <Voucher />}
                 </TabPanel>
               </TabsBody>
             </Tabs>

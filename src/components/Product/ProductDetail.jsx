@@ -231,7 +231,7 @@ const ProductDetail = () => {
                       </li>
                     </ul>
                     <p className="text-xs dark:text-gray-400 ">
-                      ({reviews && reviews.length} customer reviews)
+                      ({(reviews && reviews.length) || 0} customer reviews)
                     </p>
                   </div>
                   <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">

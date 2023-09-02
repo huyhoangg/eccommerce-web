@@ -18,7 +18,7 @@ function ReturnPaymentPage() {
   // const vnp_OrderInfo = queryParams.get("vnp_OrderInfo");
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const queryLink = window.location.href.split("?");
     const IPN_query = `/v1/user/checkInvoice?${queryLink[1]}`;

@@ -3,21 +3,6 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const products = [
-  {
-    id: 1,
-    name: "Cold Brew Bottle",
-    description:
-      "This glass bottle comes with a mesh insert for steeping tea or cold-brewing coffee. Pour from any angle and remove the top for easy cleaning.",
-    href: "#",
-    quantity: 1,
-    price: "$32.00",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/confirmation-page-05-product-01.jpg",
-    imageAlt: "Glass bottle with black plastic pour top and mesh insert.",
-  },
-];
-
 export default function ThankYou() {
   const [queryParams] = useSearchParams();
   const orderId = queryParams.get("vnp_TxnRef");
@@ -29,7 +14,7 @@ export default function ThankYou() {
         console.log("id", orderId);
 
         const response = await axios.get(`/v1/user/getInvoice/${orderId}`);
-        setOrderInfo(response.data)
+        setOrderInfo(response.data);
       } catch (e) {
         console.log(e);
       }
@@ -88,7 +73,9 @@ export default function ThankYou() {
                     </div>
                     <div className="pl-4 flex sm:pl-6">
                       <dt className="font-medium text-gray-900">Price</dt>
-                      <dd className="ml-2 text-gray-700">{product.productId.price} VND</dd>
+                      <dd className="ml-2 text-gray-700">
+                        {product.productId.price} VND
+                      </dd>
                     </div>
                   </dl>
                 </div>
@@ -105,9 +92,9 @@ export default function ThankYou() {
                 <dt className="font-medium text-gray-900">Shipping address</dt>
                 <dd className="mt-2 text-gray-700">
                   <address className="not-italic">
-                    <span className="block">Kristin Watson</span>
-                    <span className="block">7363 Cynthia Pass</span>
-                    <span className="block">Toronto, ON N3Y 4H8</span>
+                    <span className="block">{orderInfo?.cusId.address}</span>
+                    {/* <span className="block">7363 Cynthia Pass</span>
+                    <span className="block">Toronto, ON N3Y 4H8</span> */}
                   </address>
                 </dd>
               </div>
@@ -115,9 +102,9 @@ export default function ThankYou() {
                 <dt className="font-medium text-gray-900">Billing address</dt>
                 <dd className="mt-2 text-gray-700">
                   <address className="not-italic">
-                    <span className="block">Kristin Watson</span>
-                    <span className="block">7363 Cynthia Pass</span>
-                    <span className="block">Toronto, ON N3Y 4H8</span>
+                    <span className="block">{orderInfo?.cusId.address}</span>
+                    {/* <span className="block">7363 Cynthia Pass</span>
+                    <span className="block">Toronto, ON N3Y 4H8</span> */}
                   </address>
                 </dd>
               </div>
@@ -147,7 +134,7 @@ export default function ThankYou() {
             <h3 className="sr-only">Summary</h3>
 
             <dl className="space-y-6 border-t border-gray-200 text-sm pt-10">
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Subtotal</dt>
                 <dd className="text-gray-700">$36.00</dd>
               </div>
@@ -163,10 +150,16 @@ export default function ThankYou() {
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Shipping</dt>
                 <dd className="text-gray-700">$5.00</dd>
+              </div> */}
+              <div className="flex justify-between font-bold">
+                <dt className="font-bold text-gray-900">Total</dt>
+                <dd className="text-gray-900">${orderInfo?.total}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="font-medium text-gray-900">Total</dt>
-                <dd className="text-gray-900">${orderInfo?.total}</dd>
+                <dt className="font-medium text-gray-900">Earn Points</dt>
+                <dd className="text-gray-900">
+                  {orderInfo?.total.toString().slice(0, -3)}
+                </dd>
               </div>
             </dl>
           </div>

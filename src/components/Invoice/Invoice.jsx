@@ -58,13 +58,17 @@ export default function Invoice({ open, handler, invoiceId }) {
   }, [invoiceId]);
 
   const handleReview = async (content, rating, orderID, productID) => {
-    const resp = await axios.post("/v1/user/postReview", {
+    await axios.post("/v1/user/postReview", {
       content,
       rating,
       orderID,
       productID,
     });
-    toast.success("cám ơn bạn đã review sản phẩm, bạn được cộng 1 điểm", {autoClose:10000});
+    const loyaltyFetch = await axios.get("/v1/user/getLoyaltyInfo");
+    toast.success(
+      `cám ơn bạn đã review sản phẩm, bạn được cộng ${loyaltyFetch.data.pointReview} điểm`,
+      { autoClose: 10000 }
+    );
     setOpenReviewList((cur) => cur.filter((curId) => curId != productID));
     getInvoice();
   };
@@ -102,17 +106,30 @@ export default function Invoice({ open, handler, invoiceId }) {
               <div>
                 <div className="max-w-2xl mx-auto py-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:py-8 lg:grid lg:grid-cols-2 lg:gap-x-8 xl:gap-x-24">
                   <div className="lg:col-start-2">
-                    <h1 className="text-sm font-medium text-indigo-600">
-                      Payment successful
-                    </h1>
-                    <p className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
-                      Thanks for ordering
-                    </p>
-                    <p className="mt-2 text-base text-gray-500">
-                      We appreciate your order, we’re currently processing it.
-                      So hang tight and we’ll send you confirmation very soon!
-                    </p>
-
+                    {invoice && invoice.status == "paid" ? (
+                      <>
+                        <h1 className="text-sm font-medium text-indigo-600">
+                          Payment successful
+                        </h1>
+                        <p className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+                          Thanks for ordering
+                        </p>
+                        <p className="mt-2 text-base text-gray-500">
+                          We appreciate your order, we’re currently processing
+                          it. So hang tight and we’ll send you confirmation very
+                          soon!
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h1 className="text-sm font-medium text-indigo-600">
+                          Payment Fail
+                        </h1>
+                        <p className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+                          Waiting for your new order
+                        </p>
+                      </>
+                    )}
                     <dl className="mt-16 text-sm font-medium">
                       <dt className="text-gray-900">Tracking number</dt>
                       <dd className="mt-2 text-indigo-600">
@@ -140,21 +157,22 @@ export default function Invoice({ open, handler, invoiceId }) {
                                 {product.productId.name}
                               </h3>
                               <p>x{product.quantity}</p>
-                              {!product.isReview ? (
-                                <Button
-                                  className="text-red-400"
-                                  variant="text"
-                                  onClick={() =>
-                                    toggleOpenReview(product.productId._id)
-                                  }
-                                >
-                                  Review
-                                </Button>
-                              ) : (
-                                <h4 className="italic text-green-400">
-                                  reviewed
-                                </h4>
-                              )}
+                              {invoice.status == "paid" &&
+                                (!product.isReview ? (
+                                  <Button
+                                    className="text-red-400"
+                                    variant="text"
+                                    onClick={() =>
+                                      toggleOpenReview(product.productId._id)
+                                    }
+                                  >
+                                    Review
+                                  </Button>
+                                ) : (
+                                  <h4 className="italic text-green-400">
+                                    reviewed
+                                  </h4>
+                                ))}
                               <Collapse
                                 open={openReviewList.includes(
                                   product.productId._id
@@ -242,12 +260,20 @@ export default function Invoice({ open, handler, invoiceId }) {
                         </dt>
                         <dd className="mt-2">
                           <p className="not-italic">
-                            <span className="block">
-                              {invoice && invoice.paymentInfo.vnp_CardType}
-                            </span>
-                            <span className="block">
-                              {invoice && invoice.paymentInfo.vnp_BankCode}
-                            </span>
+                            {invoice && invoice.status == "paid" ? (
+                              <>
+                                <span className="block">
+                                  {invoice && invoice.paymentInfo.vnp_CardType}
+                                </span>
+                                <span className="block">
+                                  {invoice && invoice.paymentInfo.vnp_BankCode}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="block">
+                                Cancelled payment
+                              </span>
+                            )}
                           </p>
                         </dd>
                       </div>

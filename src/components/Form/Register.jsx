@@ -63,7 +63,7 @@ function Register() {
         console.log("login successful");
         setRedirect(true);
       } catch (e) {
-        setErrorMessage("error");
+        setErrorMessage(e.response.data || "error");
       }
 
     }

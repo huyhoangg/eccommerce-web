@@ -8,36 +8,12 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 import { GiStrikingDiamonds } from "react-icons/gi";
 import { HiFire } from "react-icons/hi";
-
-const vouchers = [
-  {
-    id: 1,
-    value: 0.1,
-    name: "10%",
-    redeem: 100,
-    image:
-      "https://cdn.pixabay.com/photo/2020/03/02/18/23/coffee-4896485_1280.jpg",
-  },
-  {
-    id: 2,
-    value: 0.15,
-    redeem: 150,
-    image:
-      "https://cdn.pixabay.com/photo/2020/03/02/18/19/clairvoyance-4896472_1280.jpg",
-    name: "15%",
-  },
-  {
-    id: 3,
-    value: 0.2,
-    redeem: 200,
-    image:
-      "https://cdn.pixabay.com/photo/2020/02/04/19/06/tarot-4819137_1280.jpg",
-    name: "20%",
-  },
-];
+import { toast } from "react-toastify";
 
 const vouchers_user = [
   {
@@ -67,6 +43,57 @@ const vouchers_user = [
 ];
 
 function Voucher() {
+  const [loyaltyProgram, setLoyaltyProgram] = useState(null);
+  const [vouchers, setVouchers] = useState(null);
+  const [userVouchers, setUserVouchers] = useState(null);
+
+  async function fetchPoints() {
+    try {
+      const response = await axios.get(`/v1/user/getLoyaltyPoints`);
+      setLoyaltyProgram(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    fetchPoints();
+  }, []);
+
+  useEffect(() => {
+    async function fetchVouchers() {
+      try {
+        const response = await axios.get(`/v1/user/getRedeemVouchers`);
+        setVouchers(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchVouchers();
+  }, []);
+
+  useEffect(() => {
+    async function fetchUserVouchers() {
+      try {
+        const response = await axios.get(`/v1/user/getUserVouchers`);
+        setUserVouchers(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchUserVouchers();
+  }, [loyaltyProgram]);
+
+  const handleRedeem = async (voucherId) => {
+    const response = await axios.post("/v1/user/redeemVoucher", { voucherId });
+    if (response.data == "Redeemed") {
+      fetchPoints();
+      toast.success(`đổi voucher thành công !`, { toastId: 1 });
+    } else {
+      toast.warn(`có lỗi xảy ra, vui lòng thử lại sau !`, { toastId: 0 });
+    }
+  };
+
   return (
     <>
       <div className="bg-white flex flex-wrap items-center justify-center p-4 ">
@@ -93,7 +120,7 @@ function Voucher() {
 
                     <dd className="text-4xl font-extrabold text-black md:text-5xl flex justify-center">
                       <GiStrikingDiamonds className="text-xxl text-cyan-400" />
-                      100
+                      {loyaltyProgram && loyaltyProgram.loyaltyPoints}
                     </dd>
                   </div>
                 </dl>
@@ -103,12 +130,12 @@ function Voucher() {
                 <dl className="flex justify-center items-center gap-4 ">
                   <div className="flex flex-col rounded-lg bg-secondary px-4 py-8 text-center min-w-[15rem]">
                     <dt className="order-last text-lg font-medium text-gray-500 mt-2">
-                      Total Orders
+                      Orders Points
                     </dt>
 
                     <dd className="text-4xl font-extrabold text-black md:text-5xl flex justify-center">
                       <HiFire className="text-xxl text-red-400" />
-                      10
+                      {loyaltyProgram && loyaltyProgram.ordersPoints}
                     </dd>
                   </div>
                 </dl>
@@ -123,61 +150,72 @@ function Voucher() {
           <div className="flex flex-col rounded-lg  px-4 py-8 text-center">
             <h2 className="font-bold text-xl mb-4">Redeem</h2>
             <ul>
-              {vouchers.map((voucher) => (
-                <li key={voucher.id}>
-                  <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
-                    <CardHeader
-                      floated={false}
-                      shadow={false}
-                      color="transparent"
-                      className="m-0 rounded-none"
-                    >
-                      <img src={voucher.image} alt="off price" />
-                    </CardHeader>
-                    <CardBody className="flex justify-between">
-                      <Typography variant="h5" color="red">
-                        {voucher.name} OFF
-                      </Typography>
-                      <IconButton variant="outlined" className="text-cyan-400">
-                        <p>{voucher.redeem}</p>
-                        <GiStrikingDiamonds className="text-lg " />
-                      </IconButton>
-                    </CardBody>
-                    <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
-                    <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
-                  </Card>
-                </li>
-              ))}
+              {vouchers &&
+                vouchers.map((voucher) => (
+                  <li key={voucher._id}>
+                    <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
+                      <CardHeader
+                        floated={false}
+                        shadow={false}
+                        color="transparent"
+                        className="m-0 rounded-none"
+                      >
+                        <img src={voucher.image} alt="off price" />
+                      </CardHeader>
+                      <CardBody className="flex justify-between">
+                        <Typography variant="h5" color="red">
+                          {voucher.title}
+                        </Typography>
+                        <IconButton
+                          variant="outlined"
+                          className="text-cyan-400"
+                          onClick={() => handleRedeem(voucher._id)}
+                        >
+                          <p>{voucher.points}</p>
+                          <GiStrikingDiamonds className="text-lg " />
+                        </IconButton>
+                      </CardBody>
+                      <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                      <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                    </Card>
+                  </li>
+                ))}
             </ul>
           </div>
 
           <div className="flex flex-col rounded-lg  px-4 py-8 text-center">
             <h2 className="font-bold text-xl mb-4">Your coupon</h2>
             <ul>
-              {vouchers_user.map((voucher) => (
-                <li key={voucher.id}>
-                  <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
-                    <CardHeader
-                      floated={false}
-                      shadow={false}
-                      color="transparent"
-                      className="m-0 rounded-none"
-                    >
-                      <img src={voucher.image} alt="off price" />
-                    </CardHeader>
-                    <CardBody className="flex justify-between">
-                      <Typography variant="h5" color="red">
-                        {voucher.name} OFF
-                      </Typography>
-                      <p className="border-dashed border-2 border-red-300 text-red-300 px-5">
-                        {voucher.code}
-                      </p>
-                    </CardBody>
-                    <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
-                    <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
-                  </Card>
-                </li>
-              ))}
+              {userVouchers ? (
+                userVouchers.map((voucher) => (
+                  <li key={voucher._id}>
+                    <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
+                      <CardHeader
+                        floated={false}
+                        shadow={false}
+                        color="transparent"
+                        className="m-0 rounded-none"
+                      >
+                        <img src={voucher.image} alt="off price" />
+                      </CardHeader>
+                      <CardBody className="flex justify-between">
+                        <Typography variant="h5" color="red">
+                          {voucher.name}
+                        </Typography>
+                        <p className="border-dashed border-2 border-red-300 text-red-300 px-5">
+                          {voucher.code}
+                        </p>
+                      </CardBody>
+                      <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                      <div className="w-9 h-9 bg-white rounded-full absolute bottom-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                    </Card>
+                  </li>
+                ))
+              ) : (
+                <Typography variant="h6" color="red">
+                  bạn chưa có voucher nào !
+                </Typography>
+              )}
             </ul>
           </div>
 
@@ -217,7 +255,10 @@ function Voucher() {
                         <p className="text-base font-bold">{5}</p>
                       </div>
                     </Button>
-                    <Typography variant="small" className="mb-4 text-gray-400 mt-5">
+                    <Typography
+                      variant="small"
+                      className="mb-4 text-gray-400 mt-5"
+                    >
                       Expired in 2023-08-02
                     </Typography>
                   </CardBody>

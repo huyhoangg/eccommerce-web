@@ -10,7 +10,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Invoice from "../Invoice/invoice";
 import axios from "axios";
 
@@ -23,10 +23,10 @@ const TABLE_HEAD = [
   "",
 ];
 
-export default function OrderHistory() {
+function OrderHistory() {
   const [openInvoiceId, setOpenInvoiceId] = useState(null);
   const [invoices, setInvoices] = useState([]);
-  
+
   useEffect(() => {
     async function getInvoices() {
       try {
@@ -163,3 +163,5 @@ export default function OrderHistory() {
     </Card>
   );
 }
+
+export default memo(OrderHistory);
