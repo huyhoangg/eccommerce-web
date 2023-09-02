@@ -26,10 +26,10 @@ function AccountInformation() {
   const handleSaveUser = async () => {
     try {
       await axios.post("/v1/user/profile", user);
-      toast.success("updated your information!");
+      toast.success("Updated your information! 😍😍");
     } catch (e) {
       console.log(e);
-      toast.error("something went wrong!");
+      toast.error("Something went wrong! 😔😔😔");
     }
   };
 
@@ -70,8 +70,9 @@ function AccountInformation() {
             />
           </div>
 
-          <div className="sm:col-span-4">
+          <div className="col-span-4 md:col-span-6">
             <Input
+            className="w-full "
               variant="static"
               label="Email address"
               value={user.email}
@@ -81,7 +82,7 @@ function AccountInformation() {
             />
           </div>
 
-          <div className="sm:col-span-3">
+          <div className="col-span-4 md:col-span-6">
             <Input
               variant="static"
               label="Phone"

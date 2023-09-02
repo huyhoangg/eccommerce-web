@@ -26,8 +26,10 @@ export default function RelatedProduct() {
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products &&
-            products.map((product) => (
-              <div key={product._id} className="group relative">
+            products.map((product) => {
+              const formattedPrice = product.price.toLocaleString('vi-VN');
+              return (
+                <div key={product._id} className="group relative">
                 <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                   <Link to={`/store/${product._id}`}>
                     <img
@@ -44,11 +46,14 @@ export default function RelatedProduct() {
                       </p>
                       <div className="flex items-center">
                         <p className="text-lg font-semibold text-black cursor-auto my-3">
-                          ${product.price}
+                          <span className="" style={{ textDecoration: 'underline', textDecorationOffset: '8px' }}>
+                            đ
+                          </span>
+                          <span>{formattedPrice}</span>
                         </p>
                         <del>
                           <p className="text-sm text-gray-600 cursor-auto ml-2">
-                            $199
+                            đ 1.599.000
                           </p>
                         </del>
                         <div className="ml-auto">
@@ -71,8 +76,8 @@ export default function RelatedProduct() {
                     </div>
                   </Link>
                 </div>
-              </div>
-            ))}
+                </div>
+              )})}
         </div>
       </div>
     </div>

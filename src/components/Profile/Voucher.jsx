@@ -120,17 +120,17 @@ function Voucher() {
 
       <div className="mt-1">
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="flex flex-col rounded-lg  px-4 py-8 text-center">
+          <div className="flex flex-col   px-4 py-8 text-center">
             <h2 className="font-bold text-xl mb-4">Redeem</h2>
             <ul>
               {vouchers.map((voucher) => (
                 <li key={voucher.id}>
-                  <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
+                  <Card className="max-w-[24rem]  bg-secondary mb-4">
                     <CardHeader
                       floated={false}
                       shadow={false}
                       color="transparent"
-                      className="m-0 rounded-none"
+                      className="m-0 rounded-none rounded-lg"
                     >
                       <img src={voucher.image} alt="off price" />
                     </CardHeader>
@@ -156,12 +156,12 @@ function Voucher() {
             <ul>
               {vouchers_user.map((voucher) => (
                 <li key={voucher.id}>
-                  <Card className="max-w-[24rem] overflow-hidden bg-secondary mb-4">
+                  <Card className="max-w-[24rem] bg-secondary mb-4">
                     <CardHeader
                       floated={false}
                       shadow={false}
                       color="transparent"
-                      className="m-0 rounded-none"
+                      className="m-0 rounded-none  rounded-lg"
                     >
                       <img src={voucher.image} alt="off price" />
                     </CardHeader>
