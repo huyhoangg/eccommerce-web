@@ -243,9 +243,6 @@ const ProductDetail = () => {
                   </span>
                     <span>{formattedPrice}</span>
                    
-                    <span className=" text-base ml-[5px] font-normal text-gray-500 line-through dark:text-gray-400">
-                      đ 1.599.000
-                    </span>
                   </p>
                   <p className="text-green-600 dark:text-green-300 ">
                     {product.stock} in stock
