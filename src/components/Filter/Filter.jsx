@@ -109,10 +109,8 @@ export const Filter = () => {
             role="dialog"
             aria-modal="true"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25"></div>
 
-            <div className="fixed inset-0 z-40 flex">
-              <div className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl hidden">
+             <div className="relative ml-auto  h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl hidden">
                 <div className="flex items-center justify-between px-4">
                   <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                   <button
@@ -222,16 +220,15 @@ export const Filter = () => {
                   ))}
                 </form>
               </div>
-            </div>
           </div>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+            <div className="flex items-baseline md:justify-around border-b border-gray-200 pb-6 pt-4 md:pt-24 flex-wrap md:flex-nowrap">
+              <h1 className="text-[14px] md:text-4xl font-bold tracking-tight text-gray-900">
                 New Arrivals
               </h1>
 
-              <div className="w-2/5">
+              <div className="ml-16 md:ml-0 flex:1 md:w-2/5">
                 <Input
                   variant="standard"
                   placeholder="Search ..."
@@ -240,7 +237,7 @@ export const Filter = () => {
                 />
               </div>
 
-              <div className="w-40">
+              <div className="w-full md:w-40 mt-5 md:mt-0 flex:1">
                 <Select
                   onChange={(event) =>
                     handleSortProduct(productByCategory, event)
@@ -256,7 +253,7 @@ export const Filter = () => {
               </div>
             </div>
 
-            <section aria-labelledby="products-heading" className="pb-24 pt-6">
+            <section aria-labelledby="products-heading" className="md:pb-24  pt-6">
               <h2 id="products-heading" className="sr-only">
                 Products
               </h2>

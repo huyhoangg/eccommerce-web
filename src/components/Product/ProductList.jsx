@@ -41,6 +41,7 @@ export const ProductList = ({ products }) => {
                 </div>
               );
             })}
+
           </div>
         </div>
       </section>
