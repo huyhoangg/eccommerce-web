@@ -1,10 +1,9 @@
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
+  Chip,
   IconButton,
   Typography,
 } from "@material-tailwind/react";
@@ -15,37 +14,15 @@ import { GiStrikingDiamonds } from "react-icons/gi";
 import { HiFire } from "react-icons/hi";
 import { toast } from "react-toastify";
 
-const vouchers_user = [
-  {
-    id: 1,
-    value: 0.1,
-    name: "10%",
-    code: "ABC",
-    image:
-      "https://cdn.pixabay.com/photo/2020/03/02/18/23/coffee-4896485_1280.jpg",
-  },
-  {
-    id: 2,
-    value: 0.15,
-    code: "ABC",
-    image:
-      "https://cdn.pixabay.com/photo/2020/03/02/18/19/clairvoyance-4896472_1280.jpg",
-    name: "15%",
-  },
-  {
-    id: 3,
-    value: 0.2,
-    code: "ABV",
-    image:
-      "https://cdn.pixabay.com/photo/2020/02/04/19/06/tarot-4819137_1280.jpg",
-    name: "20%",
-  },
-];
+const TABLE_HEAD = ["Title", "Change", "Date", ""];
 
 function Voucher() {
   const [loyaltyProgram, setLoyaltyProgram] = useState(null);
+  const [history, setHistory] = useState(null);
   const [vouchers, setVouchers] = useState(null);
   const [userVouchers, setUserVouchers] = useState(null);
+  const [reward, setReward] = useState(null);
+  const [classes, setClasses] = useState("");
 
   async function fetchPoints() {
     try {
@@ -73,6 +50,18 @@ function Voucher() {
   }, []);
 
   useEffect(() => {
+    async function fetchReward() {
+      try {
+        const response = await axios.get(`/v1/user/getRewardToRedeem`);
+        setReward(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchReward();
+  }, []);
+
+  useEffect(() => {
     async function fetchUserVouchers() {
       try {
         const response = await axios.get(`/v1/user/getUserVouchers`);
@@ -84,6 +73,18 @@ function Voucher() {
     fetchUserVouchers();
   }, [loyaltyProgram]);
 
+  useEffect(() => {
+    async function fetchLoyaltyHistory() {
+      try {
+        const response = await axios.get(`/v1/user/getLoyaltyHistory`);
+        setHistory(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchLoyaltyHistory();
+  }, []);
+
   const handleRedeem = async (voucherId) => {
     const response = await axios.post("/v1/user/redeemVoucher", { voucherId });
     if (response.data == "Redeemed") {
@@ -91,6 +92,15 @@ function Voucher() {
       toast.success(`đổi voucher thành công !`, { toastId: 1 });
     } else {
       toast.warn(`có lỗi xảy ra, vui lòng thử lại sau !`, { toastId: 0 });
+    }
+  };
+
+  const handleRedeemReward = async () => {
+    const response = await axios.post("/v1/user/redeemReward");
+    if (response.data == "Redeem success, it's on the way to you !") {
+      toast.success("Redeem success, it's on the way to you !", { toastId: 1 });
+    } else {
+      toast.warn(response.data, { toastId: 0 });
     }
   };
 
@@ -223,168 +233,144 @@ function Voucher() {
             <h2 className="font-bold text-xl mb-4">Reward</h2>
             <ul>
               <li>
-                <Card
-                  shadow={false}
-                  className="relative grid h-[40rem] w-full max-w-[28rem] items-end justify-center overflow-hidden text-center"
-                >
-                  <CardHeader
-                    floated={false}
-                    shadow={false}
-                    color="transparent"
-                    className="absolute inset-0 m-0 h-full w-full rounded-none bg-[url('https://images.unsplash.com/photo-1615829332206-22479388eecc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80')] bg-cover bg-center"
-                  >
-                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />
-                  </CardHeader>
-                  <CardBody className="relative py-14 px-6 md:px-12">
-                    <Typography
-                      variant="h2"
-                      color="white"
-                      className="mb-6 font-medium leading-[1.5]"
-                    >
-                      Angel Fallen
-                    </Typography>
-                    <Typography variant="h6" className="mb-4 text-gray-400">
-                      Limited Edition
-                    </Typography>
-                    <Button
-                      variant="outlined"
-                      className="text-red-400 border-red-400 focus:ring-transparent"
-                    >
-                      <div className="flex">
-                        <HiFire className="text-xl " />
-                        <p className="text-base font-bold">{5}</p>
-                      </div>
-                    </Button>
-                    <Typography
-                      variant="small"
-                      className="mb-4 text-gray-400 mt-5"
-                    >
-                      Expired in 2023-08-02
-                    </Typography>
-                  </CardBody>
-                </Card>
+                <div className="min-h-screen ">
+                  <div className="relative flex overflow-hidden rounded-lg">
+                    <img
+                      src={reward?.product.imageURLs[0]}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-center object-cover "
+                    />
+                    <div className="absolute inset-0 bg-black opacity-40"></div>
+                    <div className="relative w-full flex flex-col items-center justify-end bg-black bg-opacity-40 p-8 sm:py-28">
+                      <Typography
+                        variant="h4"
+                        color="white"
+                        className="mb-6 font-medium leading-[1.5]"
+                      >
+                        {reward?.product.name}
+                      </Typography>
+                      <Typography variant="h6" className="mb-4 text-gray-400">
+                        Limited Edition
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        className="text-red-400 border-red-400 focus:ring-transparent"
+                        onClick={() => handleRedeemReward()}
+                      >
+                        <div className="flex">
+                          <HiFire className="text-xl " />
+                          <p className="text-base font-bold">{reward?.point}</p>
+                        </div>
+                      </Button>
+                      <Typography
+                        variant="small"
+                        className="mb-4 text-gray-400 mt-5"
+                      >
+                        Expired in {reward?.expired.slice(0, 10)}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
         </dl>
       </div>
 
-      {/* <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm m-auto mb-4">
-          <div className="h-2 bg-red-600"></div>
-
-          <div className="p-6">
-            <div className="text-5xl font-bold text-red-600 mb-4">50% OFF</div>
-
-            <p className="text-gray-700 mb-4">
-              Get half off your next purchase of $50 or more with this exclusive
-              coupon!
-            </p>
-
-            <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-              <span className="font-semibold">Coupon Code:</span>
-              <span className="font-bold text-red-600">SAVE50</span>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <span>Expires on 31/12/2023</span>
+      <Card className="h-full w-full mb-6">
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
+            <div>
+              <Typography variant="h5" color="blue-gray">
+                Loyalty Point History
+              </Typography>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm m-auto mb-4">
-          <div className="h-2 bg-red-600"></div>
+        </CardHeader>
+        <CardBody className="overflow-scroll px-0 max-h-[60vh]">
+          <table className="w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  >
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {history?.map((hist, index) => {
+                const isLast = index === history.length - 1;
+                const classes = isLast
+                  ? "p-4"
+                  : "p-4 border-b border-blue-gray-50";
 
-          <div className="p-6">
-            <div className="text-5xl font-bold text-red-600 mb-4">50% OFF</div>
+                return (
+                  <tr key={hist._id}>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        {/* <BsFillBagHeartFill className=" object-contain text-green-400" /> */}
 
-            <p className="text-gray-700 mb-4">
-              Get half off your next purchase of $50 or more with this exclusive
-              coupon!
-            </p>
-
-            <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-              <span className="font-semibold">Coupon Code:</span>
-              <span className="font-bold text-red-600">SAVE50</span>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <span>Expires on 31/12/2023</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm m-auto mb-4">
-          <div className="h-2 bg-red-600"></div>
-
-          <div className="p-6">
-            <div className="text-5xl font-bold text-red-600 mb-4">50% OFF</div>
-
-            <p className="text-gray-700 mb-4">
-              Get half off your next purchase of $50 or more with this exclusive
-              coupon!
-            </p>
-
-            <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-              <span className="font-semibold">Coupon Code:</span>
-              <span className="font-bold text-red-600">SAVE50</span>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <span>Expires on 31/12/2023</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm m-auto mb-4">
-          <div className="h-2 bg-red-600"></div>
-
-          <div className="p-6">
-            <div className="text-5xl font-bold text-red-600 mb-4">50% OFF</div>
-
-            <p className="text-gray-700 mb-4">
-              Get half off your next purchase of $50 or more with this exclusive
-              coupon!
-            </p>
-
-            <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-              <span className="font-semibold">Coupon Code:</span>
-              <span className="font-bold text-red-600">SAVE50</span>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <span>Expires on 31/12/2023</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="w-full md:w-1/2 lg:w-1/3 p-2">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm m-auto mb-4">
-          <div className="h-2 bg-red-600"></div>
-
-          <div className="p-6">
-            <div className="text-5xl font-bold text-red-600 mb-4">50% OFF</div>
-
-            <p className="text-gray-700 mb-4">
-              Get half off your next purchase of $50 or more with this exclusive
-              coupon!
-            </p>
-
-            <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-              <span className="font-semibold">Coupon Code:</span>
-              <span className="font-bold text-red-600">SAVE50</span>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <span>Expires on 31/12/2023</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* </div> */}
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-bold"
+                        >
+                          {hist.title}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-14 text-center">
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={hist.point < 0 ? hist.point : `+${hist.point}`}
+                          color={hist.point < 0 ? "red" : "green"}
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {hist.date.substring(0, 10)}
+                      </Typography>
+                    </td>
+                    {/* <td className={classes}>
+                      <div className="w-max">
+                        <Chip
+                          size="sm"
+                          variant="ghost"
+                          value={hist.status}
+                          color={
+                            hist.status === "paid"
+                              ? "green"
+                              : hist.status === "pending"
+                              ? "amber"
+                              : "red"
+                          }
+                        />
+                      </div>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </CardBody>
+      </Card>
     </>
   );
 }
