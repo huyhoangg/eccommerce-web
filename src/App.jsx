@@ -18,7 +18,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import "react-toastify/dist/ReactToastify.css";
 import ThankYouPage from "~/pages/InformationPage/ReturnPaymentPage";
 
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "http://server-for-tarot-site.vercel.app:8000";
 axios.defaults.withCredentials = true;
 
 function App() {
