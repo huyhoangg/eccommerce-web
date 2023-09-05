@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { memo, useEffect, useState } from "react";
-import Invoice from "../Invoice/invoice";
+import Invoice from "../Invoice/invoice.jsx";
 import axios from "axios";
 
 const TABLE_HEAD = [
