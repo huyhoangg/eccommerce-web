@@ -23,7 +23,7 @@ const TABLE_HEAD = [
   "",
 ];
 
-function OrderHistory() {
+export default function OrderHistory() {
   const [openInvoiceId, setOpenInvoiceId] = useState(null);
   const [invoices, setInvoices] = useState([]);
 
@@ -164,4 +164,3 @@ function OrderHistory() {
   );
 }
 
-export default memo(OrderHistory);
