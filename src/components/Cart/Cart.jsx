@@ -13,10 +13,10 @@ import { CartContext } from "~/contexts/CartContext";
 
 function CartItems() {
   const shipping = 5000;
-  const shipFormat = shipping.toLocaleString('vi-VN')
+  const shipFormat = shipping.toLocaleString("vi-VN");
 
   const cartProducts = useContext(CartContext);
-  const formattedCart = cartProducts.getTotalPrice().toLocaleString('vi-VN');
+  const formattedCart = cartProducts.getTotalPrice().toLocaleString("vi-VN");
 
   const [total, setTotal] = useState(0);
   const [check, setCheck] = useState(false);
@@ -24,10 +24,9 @@ function CartItems() {
   const [promoStatus, setPromoStatus] = useState("Discount code");
   const [validPromo, setValidPromo] = useState(null);
   const discount = validPromo
-  ? Math.round(validPromo.value * cartProducts.getTotalPrice())
-  : 0;
-const formattedDiscount = discount.toLocaleString('vi-VN');
-
+    ? Math.round(validPromo.value * cartProducts.getTotalPrice())
+    : 0;
+  const formattedDiscount = discount.toLocaleString("vi-VN");
 
   async function handlePay(e) {
     e.preventDefault();
@@ -79,11 +78,10 @@ const formattedDiscount = discount.toLocaleString('vi-VN');
     }
   };
 
-  
   useEffect(() => {
     setTotal(
       cartProducts.getTotalPrice() +
-      shipping  -
+        (cartProducts.products.length == 0 ? 0 : shipping) -
         (validPromo
           ? Math.round(validPromo.value * cartProducts.getTotalPrice())
           : 0)
@@ -98,90 +96,96 @@ const formattedDiscount = discount.toLocaleString('vi-VN');
             <ul className="-my-8">
               {cartProducts.products &&
                 cartProducts.products.map((product) => {
-                  const formattedPrice = product.productDetail.price.toLocaleString('vi-VN');
+                  const formattedPrice =
+                    product.productDetail.price.toLocaleString("vi-VN");
                   return (
-                  <li
-                    key={product.productId}
-                    className="flex flex-col space-y-3 py-6 pr-2 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
-                  >
-                    <div className="shrink-0 flex justify-center items-center">
-                      <img
-                        className="h-24 w-24 max-w-full rounded-lg object-cover"
-                        src={product.productDetail.imageURLs[0]}
-                        alt=""
-                      />
-                    </div>
+                    <li
+                      key={product.productId}
+                      className="flex flex-col space-y-3 py-6 pr-2 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
+                    >
+                      <div className="shrink-0 flex justify-center items-center">
+                        <img
+                          className="h-24 w-24 max-w-full rounded-lg object-cover"
+                          src={product.productDetail.imageURLs[0]}
+                          alt=""
+                        />
+                      </div>
 
-                    <div className="relative flex flex-1 flex-col justify-between">
-                      <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
-                        <div className="pr-8 sm:pr-5">
-                          <p className="text-base font-semibold text-gray-900">
-                            {product.productDetail.name}
-                          </p>
-                          <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
-                            {product.productDetail.category.categoryName}
-                          </p>
+                      <div className="relative flex flex-1 flex-col justify-between">
+                        <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
+                          <div className="pr-8 sm:pr-5">
+                            <p className="text-base font-semibold text-gray-900">
+                              {product.productDetail.name}
+                            </p>
+                            <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
+                              {product.productDetail.category.categoryName}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                            <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
+                              {formattedPrice}đ
+                            </p>
+                          </div>
+                          <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
+                            <button
+                              onClick={() =>
+                                cartProducts.removeFromCart(product.productId)
+                              }
+                              className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400"
+                            >
+                              <span className="m-auto text-2xl font-thin">
+                                -
+                              </span>
+                            </button>
+                            <p className="flex justify-center items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">
+                              {cartProducts.getQuantity(product.productId)}
+                            </p>
+                            <button
+                              onClick={() => {
+                                cartProducts.addToCart(
+                                  product.productId,
+                                  product
+                                );
+                              }}
+                              className="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400"
+                            >
+                              <span className="m-auto text-2xl font-thin">
+                                +
+                              </span>
+                            </button>
+                          </div>
                         </div>
 
-                        <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                          <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-                            {formattedPrice}đ
-                          </p>
-                        </div>
-                        <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
+                        <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
                           <button
-                            onClick={() =>
-                              cartProducts.removeFromCart(product.productId)
-                            }
-                            className="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400"
-                          >
-                            <span className="m-auto text-2xl font-thin">-</span>
-                          </button>
-                          <p className="flex justify-center items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">
-                            {cartProducts.getQuantity(product.productId)}
-                          </p>
-                          <button
+                            type="button"
+                            className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
                             onClick={() => {
-                              cartProducts.addToCart(
-                                product.productId,
-                                product
-                              );
+                              cartProducts.removeAllCart(product.productId);
                             }}
-                            className="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400"
                           >
-                            <span className="m-auto text-2xl font-thin">+</span>
+                            <svg
+                              className="h-5 w-5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                                className=""
+                              ></path>
+                            </svg>
                           </button>
                         </div>
                       </div>
-
-                      <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
-                        <button
-                          type="button"
-                          className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
-                          onClick={() => {
-                            cartProducts.removeAllCart(product.productId);
-                          }}
-                        >
-                          <svg
-                            className="h-5 w-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M6 18L18 6M6 6l12 12"
-                              className=""
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                )})}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
 
@@ -227,21 +231,20 @@ const formattedDiscount = discount.toLocaleString('vi-VN');
                 )}
               </div>
               <p className="text-lg font-semibold text-gray-900">
-                
                 {formattedDiscount}đ
               </p>
             </div>
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-400">Shipping</p>
               <p className="text-lg font-semibold text-gray-900">
-                {shipFormat}đ
+                {cartProducts.products.length == 0 ? 0 : shipFormat}đ
               </p>
             </div>
           </div>
           <div className="mt-3 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
-              {total.toLocaleString('vi-VN')}
+              {total.toLocaleString("vi-VN")}
               <span className="text-[18px] font-bold ">đ</span>{" "}
             </p>
           </div>

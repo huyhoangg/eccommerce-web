@@ -153,7 +153,9 @@ export default function ThankYou() {
               </div> */}
               <div className="flex justify-between font-bold">
                 <dt className="font-bold text-gray-900">Total</dt>
-                <dd className="text-gray-900">${orderInfo?.total}</dd>
+                <dd className="text-gray-900">
+                  {orderInfo?.total.toLocaleString("vi-vn")}
+                </dd>
               </div>
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Earn Points</dt>
