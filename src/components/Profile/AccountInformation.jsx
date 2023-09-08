@@ -16,6 +16,13 @@ function AccountInformation() {
     username: "",
   });
   const { userInfo } = useContext(AuthContext);
+  const [firstN,setFirstN] = useState(null)
+  const [lastN,setLasttN] = useState(null)
+  const [phone,setPhone] = useState(null)
+  const [address,setAddress] = useState(null)
+
+
+
 
   useEffect(() => {
     if (userInfo != null) {
@@ -24,6 +31,30 @@ function AccountInformation() {
   }, [userInfo]);
 
   const handleSaveUser = async () => {
+    if (!user.firstName) {
+      setFirstN("First name cannot be empty!");
+    } else {
+      setFirstN(null);
+    }
+  if (!user.lastName) {
+    setLasttN("Last name cannot be empty!");
+  } else {
+    setLasttN(null);
+  }
+  if (!user.phone) {
+    setPhone("Phone cannot be empty!");
+  } else {
+    setPhone(null);
+  }
+  if (!user.address) {
+    setAddress("Address cannot be empty!");
+  } else {
+    setAddress(null);
+  }
+    if(!user.firstName || !user.lastName || !user.phone || !user.address ){
+      toast.error("Something went wrong! 😔😔😔");
+      return 
+    }
     try {
       await axios.post("/v1/user/profile", user);
       toast.success("Updated your information! 😍😍");
@@ -57,6 +88,7 @@ function AccountInformation() {
                 setUser((prev) => ({ ...prev, firstName: e.target.value }))
               }
             />
+            {firstN && <p className="text-red-500 text-sm">{firstN}</p>}
           </div>
 
           <div className="sm:col-span-3">
@@ -68,6 +100,7 @@ function AccountInformation() {
                 setUser((prev) => ({ ...prev, lastName: e.target.value }))
               }
             />
+             {lastN && <p className="text-red-500 text-sm">{lastN}</p>}
           </div>
 
           <div className="col-span-4 md:col-span-6">
@@ -76,9 +109,6 @@ function AccountInformation() {
               variant="static"
               label="Email address"
               value={user.email}
-              onChange={(e) =>
-                setUser((prev) => ({ ...prev, email: e.target.value }))
-              }
             />
           </div>
 
@@ -91,6 +121,7 @@ function AccountInformation() {
                 setUser((prev) => ({ ...prev, phone: e.target.value }))
               }
             />
+             {phone && <p className="text-red-500 text-sm">{phone}</p>}
           </div>
 
           <h2 className="text-base font-semibold leading-7 text-gray-900 col-span-full">
@@ -106,20 +137,11 @@ function AccountInformation() {
                 setUser((prev) => ({ ...prev, address: e.target.value }))
               }
             />
+             {address && <p className="text-red-500 text-sm">{address}</p>}
+
           </div>
 
-          <div className="sm:col-span-2 sm:col-start-1">
-            <Input variant="static" label="City" />
-          </div>
-
-          <div className="sm:col-span-2">
-            <Input variant="static" label="State / Province" />
-          </div>
-
-          <div className="sm:col-span-2">
-            <Input variant="static" label="ZIP / Postal code" />
-          </div>
-
+       
           <Button className="" color="red" onClick={handleSaveUser}>
             Save
           </Button>

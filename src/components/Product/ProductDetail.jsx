@@ -290,6 +290,7 @@ const ProductDetail = () => {
                   <div className="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
                     <button
                       onClick={() => {
+                        
                         authContext.userInfo
                           ? cartProducts.addToCart(product._id, product)
                           : navigate("/login");

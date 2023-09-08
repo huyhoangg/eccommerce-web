@@ -6,9 +6,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 
 const sortOptions = [
-  { name: "Most Popular", value: "a", current: true },
-  { name: "Best Rating", value: "b", current: false },
-  { name: "Newest", value: "c", current: false },
+  
   { name: "Price: Low to High", value: "price_ascending", current: false },
   { name: "Price: High to Low", value: "price_descending", current: false },
 ];

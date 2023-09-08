@@ -12,14 +12,22 @@ import { toast } from "react-toastify";
 import { CartContext } from "~/contexts/CartContext";
 
 function CartItems() {
-  const shippingFee = 5;
+  const shipping = 5000;
+  const shipFormat = shipping.toLocaleString('vi-VN')
 
   const cartProducts = useContext(CartContext);
+  const formattedCart = cartProducts.getTotalPrice().toLocaleString('vi-VN');
+
   const [total, setTotal] = useState(0);
   const [check, setCheck] = useState(false);
   const [promo, setPromo] = useState("");
   const [promoStatus, setPromoStatus] = useState("Discount code");
   const [validPromo, setValidPromo] = useState(null);
+  const discount = validPromo
+  ? Math.round(validPromo.value * cartProducts.getTotalPrice())
+  : 0;
+const formattedDiscount = discount.toLocaleString('vi-VN');
+
 
   async function handlePay(e) {
     e.preventDefault();
@@ -71,10 +79,11 @@ function CartItems() {
     }
   };
 
+  
   useEffect(() => {
     setTotal(
       cartProducts.getTotalPrice() +
-        shippingFee -
+      shipping  -
         (validPromo
           ? Math.round(validPromo.value * cartProducts.getTotalPrice())
           : 0)
@@ -88,7 +97,9 @@ function CartItems() {
           <div className="overflow-y-auto lg:max-h-[50vh] md:max-h-[600px] max-h-[500px] overscroll-contain pt-6">
             <ul className="-my-8">
               {cartProducts.products &&
-                cartProducts.products.map((product) => (
+                cartProducts.products.map((product) => {
+                  const formattedPrice = product.productDetail.price.toLocaleString('vi-VN');
+                  return (
                   <li
                     key={product.productId}
                     className="flex flex-col space-y-3 py-6 pr-2 text-left sm:flex-row sm:space-x-5 sm:space-y-0"
@@ -114,7 +125,7 @@ function CartItems() {
 
                         <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
                           <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-                            ${product.productDetail.price}
+                            {formattedPrice}đ
                           </p>
                         </div>
                         <div className="relative flex flex-row w-full h-10 mt-4 bg-transparent rounded-lg">
@@ -170,7 +181,7 @@ function CartItems() {
                       </div>
                     </div>
                   </li>
-                ))}
+                )})}
             </ul>
           </div>
 
@@ -202,7 +213,7 @@ function CartItems() {
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-400">Subtotal</p>
               <p className="text-lg font-semibold text-gray-900">
-                ${cartProducts.getTotalPrice()}
+                {formattedCart}đ
               </p>
             </div>
             <div className="flex items-center justify-between">
@@ -216,24 +227,22 @@ function CartItems() {
                 )}
               </div>
               <p className="text-lg font-semibold text-gray-900">
-                $
-                {validPromo
-                  ? Math.round(validPromo.value * cartProducts.getTotalPrice())
-                  : 0}
+                
+                {formattedDiscount}đ
               </p>
             </div>
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-400">Shipping</p>
               <p className="text-lg font-semibold text-gray-900">
-                ${shippingFee}
+                {shipFormat}đ
               </p>
             </div>
           </div>
           <div className="mt-3 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
-              <span className="text-xs font-normal text-gray-400">USD</span>{" "}
-              {total}
+              {total.toLocaleString('vi-VN')}
+              <span className="text-[18px] font-bold ">đ</span>{" "}
             </p>
           </div>
 

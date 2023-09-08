@@ -83,6 +83,7 @@ export default function OrderHistory() {
           </thead>
           <tbody>
             {invoices?.map((invoice, index) => {
+              const invoiceTFormat = invoice.total.toLocaleString('vi-VN')
               const isLast = index === invoices.length - 1;
               const classes = isLast
                 ? "p-4"
@@ -109,7 +110,7 @@ export default function OrderHistory() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {invoice.total}
+                      {invoiceTFormat}đ
                     </Typography>
                   </td>
                   <td className={classes}>

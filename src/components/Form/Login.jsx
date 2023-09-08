@@ -48,14 +48,14 @@ function Login() {
                       for="email"
                       className="mb-1 md:mb-3 md:text-[16px] text-xs tracking-wide text-gray-600"
                     >
-                      Username hoặc Email{" "}
+                     Email{" "}
                     </label>
                     <div className="relative">
                       <input
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"
                         id="email"
                         type="email"
-                        placeholder="Email/Username"
+                        placeholder="Nhập vào email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
@@ -76,7 +76,7 @@ function Login() {
                         className="w-full pl-3 pr-8 py-2 mb-0 md:mb-1 text-sm leading-tight text-gray-700 border rounded shadow appearance-none   focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"
                         id="password"
                         type={showPass ? "text" : "password"}
-                        placeholder="Password"
+                        placeholder="Nhập vào password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />

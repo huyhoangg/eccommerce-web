@@ -99,7 +99,7 @@ function Register() {
                         className="block mb-2 text-sm font-bold text-gray-700"
                         htmlFor="firstName"
                       >
-                        Name
+                       Họ
                       </label>
                       <input
                         className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 rounded shadow appearance-none  focus:shadow-outline"
@@ -115,7 +115,7 @@ function Register() {
                         className="block mb-2 text-sm font-bold text-gray-700"
                         htmlFor="lastName"
                       >
-                        Username
+                        Tên
                       </label>
                       <input
                         className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none  focus:outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-600 focus:shadow-outline"

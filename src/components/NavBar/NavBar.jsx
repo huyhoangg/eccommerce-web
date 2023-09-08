@@ -198,11 +198,10 @@ const NavBar = () => {
                 </MenuList>
               </Menu>
               <LuSearch className="mr-[30px] hover:text-gray-800" />
-              <AiOutlineHeart className="mr-[30px] hover:text-gray-800" />
               <Badge content={cartProducts.getTotalQuantity()}>
                 <AiOutlineShoppingCart
                   onClick={openDrawerCart}
-                  className="mr-[15px] hover:text-gray-800"
+                  className="mr-[15px] hover:text-gray-800 cursor-pointer"
                 />
               </Badge>
             </div>
