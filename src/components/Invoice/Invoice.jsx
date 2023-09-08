@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useRef} from "react";
 import {
   Button,
   Dialog,
@@ -39,9 +39,12 @@ export default function Invoice({ open, handler, invoiceId }) {
   const handleOpen = handler;
 
   const [invoice, setInvoice] = useState();
+  const formattedTotal = invoice && invoice.total.toLocaleString('vi-VN');
   const [openReviewList, setOpenReviewList] = useState([]);
   const [rated, setRated] = useState(5);
   const [content, setContent] = useState("");
+  const [clicked, setClicked] = useState(false);
+  
 
   async function getInvoice() {
     try {
@@ -58,6 +61,7 @@ export default function Invoice({ open, handler, invoiceId }) {
   }, [invoiceId]);
 
   const handleReview = async (content, rating, orderID, productID) => {
+    
     await axios.post("/v1/user/postReview", {
       content,
       rating,
@@ -73,6 +77,10 @@ export default function Invoice({ open, handler, invoiceId }) {
     getInvoice();
   };
 
+  const handleClick = event => {
+    event.currentTarget.disabled = true;
+    console.log('button clicked');
+  };
   const toggleOpenReview = (id) => {
     if (openReviewList.includes(id)) {
       setOpenReviewList((cur) => cur.filter((curId) => curId != id));
@@ -142,7 +150,9 @@ export default function Invoice({ open, handler, invoiceId }) {
                       className="mt-6 text-sm font-medium text-gray-500 border-t border-gray-200 divide-y divide-gray-200"
                     >
                       {invoice &&
-                        invoice.products.map((product) => (
+                        invoice.products.map((product) => {
+                          const pricePFormat = product.productId.price.toLocaleString('vi-VN')
+                        return (
                           <li
                             key={product.productId._id}
                             className="flex py-6 space-x-6"
@@ -191,30 +201,31 @@ export default function Invoice({ open, handler, invoiceId }) {
                                     onChange={(value) => setRated(value)}
                                   />
                                   <div className="flex gap-2">
-                                    <Button
-                                      size="sm"
-                                      className="rounded-md"
-                                      variant="outlined"
-                                      onClick={() =>
-                                        handleReview(
-                                          content,
-                                          rated,
-                                          invoice._id,
-                                          product.productId._id
-                                        )
-                                      }
-                                    >
-                                      Post
-                                    </Button>
+                                  <Button
+                                  size="sm"
+                                  className="rounded-md"
+                                  variant="outlined"
+                                  onClick={event => {
+                                    handleClick(event);
+                                    handleReview(
+                                      content,
+                                      rated,
+                                      invoice._id,
+                                      product.productId._id
+                                    );
+                                  }}
+                                >
+                                  Post
+                                </Button>
                                   </div>
                                 </div>
                               </Collapse>
                             </div>
                             <p className="flex-none font-medium text-gray-900">
-                              {product.productId.price}
+                              {pricePFormat}
                             </p>
                           </li>
-                        ))}
+                       )})}
                     </ul>
 
                     <dl className="text-sm font-medium text-gray-500 space-y-6 border-t border-gray-200 pt-6">
@@ -236,7 +247,7 @@ export default function Invoice({ open, handler, invoiceId }) {
                       <div className="flex items-center justify-between border-gray-200 text-gray-900 pt-6">
                         <dt className="text-base">Total</dt>
                         <dd className="text-base">
-                          ${invoice && invoice.total}
+                          {formattedTotal}d
                         </dd>
                       </div>
                     </dl>
@@ -287,9 +298,7 @@ export default function Invoice({ open, handler, invoiceId }) {
             <Button variant="outlined" color="red" onClick={handleOpen}>
               close
             </Button>
-            <Button variant="gradient" color="green" onClick={handleOpen}>
-              Save changes
-            </Button>
+           
           </DialogFooter>
         </Dialog>
       </ThemeProvider>
