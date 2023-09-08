@@ -43,6 +43,7 @@ export function CartProvider({ children }) {
 
   async function addToCart(id, productDetail) {
     const quantity = getQuantity(id);
+    const stock = productDetail.stock;
     if (!quantity) {
       setCartProducts([
         ...cartProducts,
@@ -53,17 +54,21 @@ export function CartProvider({ children }) {
         },
       ]);
     } else {
-      setCartProducts(
-        cartProducts.map((product) =>
-          product.productId === id
-            ? { ...product, quantity: product.quantity + 1 }
-            : product
-        )
-      );
+      if (quantity + 1 <= stock) {
+        setCartProducts(
+          cartProducts.map((product) =>
+            product.productId === id
+              ? { ...product, quantity: product.quantity + 1 }
+              : product
+          )
+        );
+      } else {
+      }
     }
+  
     await axios.post(`/v1/user/addToCart`, { productId: id });
   }
-
+  
   async function removeAllCart(id) {
     const newCart = cartProducts.filter((product) => {
       return product.productId != id;
